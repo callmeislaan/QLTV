@@ -18,11 +18,12 @@ import java.util.logging.Logger;
  * @author langt
  */
 public class DAL {
-    public Connection  getConnection() {
+    public static Connection  getConnection() {
         Connection conn = null;
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            conn = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databasename=QuanLyThuVien;");
+            conn = DriverManager.getConnection("jdbc:sqlserver://localhost;databasename=QuanLyThuVien;"
+                    + "username=sa;password=123");
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(DAL.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -53,5 +54,10 @@ public class DAL {
             Logger.getLogger(DAL.class.getName()).log(Level.SEVERE, null, ex);
         }
         return i > 0;
+    }
+    
+    public static void main(String[] args) {
+        Connection conn = getConnection();
+        System.out.println("done");
     }
 }
