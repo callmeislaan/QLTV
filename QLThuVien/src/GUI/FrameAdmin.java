@@ -273,12 +273,6 @@ public class FrameAdmin extends javax.swing.JFrame {
 
         jLabel23.setText("Mã tài liệu");
 
-        txtMaTieuLieu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtMaTieuLieuActionPerformed(evt);
-            }
-        });
-
         tblTaiLieu.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
