@@ -18,7 +18,8 @@ import java.util.logging.Logger;
  * @author langt
  */
 public class DAL {
-    public static Connection  getConnection() {
+
+    public Connection getConnection() {
         Connection conn = null;
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
@@ -29,35 +30,28 @@ public class DAL {
         }
         return conn;
     }
-    
-    public ResultSet getTable(String sql) {
+
+    public ResultSet getTable(Connection conn, String sql) {
         ResultSet rs = null;
         try {
-            try (Connection conn = getConnection()) {
-                PreparedStatement ps = conn.prepareCall(sql);
-                rs = ps.executeQuery();
-            }
+            PreparedStatement ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
         } catch (SQLException ex) {
             Logger.getLogger(DAL.class.getName()).log(Level.SEVERE, null, ex);
         }
         return rs;
     }
-    
+
     public boolean excuteNonQuery(String sql) {
         int i = -1;
         try {
             try (Connection conn = getConnection()) {
-                PreparedStatement ps = conn.prepareCall(sql);
+                PreparedStatement ps = conn.prepareStatement(sql);
                 i = ps.executeUpdate();
             }
         } catch (SQLException ex) {
             Logger.getLogger(DAL.class.getName()).log(Level.SEVERE, null, ex);
         }
         return i > 0;
-    }
-    
-    public static void main(String[] args) {
-        Connection conn = getConnection();
-        System.out.println("done");
     }
 }

@@ -5,14 +5,19 @@
  */
 package GUI;
 
-import BLL.AdminBLL;
 import BLL.BanDocBLL;
 import BLL.TaiLieuBLL;
 import BLL.ThuThuBLL;
+import Class.BanDoc;
+import Class.TaiLieu;
+import Class.ThuThu;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -27,12 +32,30 @@ public class FrameAdmin extends javax.swing.JFrame {
     BanDocBLL banDocBLL = new BanDocBLL();
     TaiLieuBLL taiLieuBLL = new TaiLieuBLL();
     ThuThuBLL thuThuBLL = new ThuThuBLL();
+    ArrayList<BanDoc> listBanDoc = new ArrayList();
+    ArrayList<TaiLieu> listTaiLieu = new ArrayList();
+    ArrayList<ThuThu> listThuThu = new ArrayList();
+    DefaultTableModel banDocModel;
+    DefaultTableModel taiLieuModel;
+    DefaultTableModel thuThuModel;
+    BanDoc banDoc = new BanDoc();
     
     public FrameAdmin() {
         initComponents();
         setLocationRelativeTo(this);
+        banDocModel = (DefaultTableModel) tblBanDoc.getModel();
+        taiLieuModel = (DefaultTableModel) tblTaiLieu.getModel();
+        thuThuModel = (DefaultTableModel) tblThuThu.getModel();
     }
-
+        
+    private void layThongTinBanDoc() {
+        banDoc.setMaBanDoc(txtMaBanDoc.getText().trim());
+        banDoc.setDiaChi(txtDiaChiBanDoc.getText().trim());
+        banDoc.setLop(txtLop.getText().trim());
+        banDoc.setNgaySinh(dcNgaySinhBanDoc.getDate());
+        banDoc.setTenBanDoc(txtTenBanDoc.getText().trim());
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -144,6 +167,11 @@ public class FrameAdmin extends javax.swing.JFrame {
 
         btnThemBanDoc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8-plus-48.png"))); // NOI18N
         btnThemBanDoc.setText("Thêm");
+        btnThemBanDoc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemBanDocActionPerformed(evt);
+            }
+        });
 
         btnSuaBanDoc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8-wrench-48.png"))); // NOI18N
         btnSuaBanDoc.setText("Sửa");
@@ -600,8 +628,17 @@ public class FrameAdmin extends javax.swing.JFrame {
 
     private void btnXemTatCaBanDocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXemTatCaBanDocActionPerformed
         // TODO add your handling code here:
-        
+        banDocModel.setRowCount(0);
+        banDocModel = banDocBLL.xemTatCaBanDoc(tblBanDoc);
     }//GEN-LAST:event_btnXemTatCaBanDocActionPerformed
+
+    private void btnThemBanDocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemBanDocActionPerformed
+        // TODO add your handling code here:
+        layThongTinBanDoc();
+        banDocBLL.themBanDoc(banDoc);
+        banDocModel.setRowCount(0);
+        banDocModel = banDocBLL.xemTatCaBanDoc(tblBanDoc);
+    }//GEN-LAST:event_btnThemBanDocActionPerformed
 
     /**
      * @param args the command line arguments
