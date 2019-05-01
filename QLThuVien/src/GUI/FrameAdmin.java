@@ -5,6 +5,10 @@
  */
 package GUI;
 
+import BLL.AdminBLL;
+import BLL.BanDocBLL;
+import BLL.TaiLieuBLL;
+import BLL.ThuThuBLL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.UIManager;
@@ -19,8 +23,14 @@ public class FrameAdmin extends javax.swing.JFrame {
     /**
      * Creates new form FrameAdmin
      */
+    
+    BanDocBLL banDocBLL = new BanDocBLL();
+    TaiLieuBLL taiLieuBLL = new TaiLieuBLL();
+    ThuThuBLL thuThuBLL = new ThuThuBLL();
+    
     public FrameAdmin() {
         initComponents();
+        setLocationRelativeTo(this);
     }
 
     /**
@@ -126,6 +136,11 @@ public class FrameAdmin extends javax.swing.JFrame {
 
         btnXemTatCaBanDoc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8-select-all-48.png"))); // NOI18N
         btnXemTatCaBanDoc.setText("Xem tất cả");
+        btnXemTatCaBanDoc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXemTatCaBanDocActionPerformed(evt);
+            }
+        });
 
         btnThemBanDoc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8-plus-48.png"))); // NOI18N
         btnThemBanDoc.setText("Thêm");
@@ -582,6 +597,11 @@ public class FrameAdmin extends javax.swing.JFrame {
     private void btnThemTaiLieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemTaiLieuActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnThemTaiLieuActionPerformed
+
+    private void btnXemTatCaBanDocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXemTatCaBanDocActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_btnXemTatCaBanDocActionPerformed
 
     /**
      * @param args the command line arguments

@@ -5,19 +5,10 @@
  */
 package BLL;
 
-import DAL.DAL;
-import java.sql.ResultSet;
-
 /**
  *
  * @author langt
  */
-public class BanDocBLL {
+public class TaiLieuBLL {
     
-    DAL dal = new DAL();
-    
-    public ResultSet xemTatCaBanDoc() {
-        String sql = "select * from BanDoc";
-        return dal.getTable(sql);
-    }
 }

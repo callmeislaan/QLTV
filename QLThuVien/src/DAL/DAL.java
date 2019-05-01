@@ -32,12 +32,26 @@ public class DAL {
     public ResultSet getTable(String sql) {
         ResultSet rs = null;
         try {
-            Connection conn = getConnection();
-            PreparedStatement ps = conn.prepareCall(sql);
-            rs = ps.executeQuery();
+            try (Connection conn = getConnection()) {
+                PreparedStatement ps = conn.prepareCall(sql);
+                rs = ps.executeQuery();
+            }
         } catch (SQLException ex) {
             Logger.getLogger(DAL.class.getName()).log(Level.SEVERE, null, ex);
         }
         return rs;
+    }
+    
+    public boolean excuteNonQuery(String sql) {
+        int i = -1;
+        try {
+            try (Connection conn = getConnection()) {
+                PreparedStatement ps = conn.prepareCall(sql);
+                i = ps.executeUpdate();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return i > 0;
     }
 }

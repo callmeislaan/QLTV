@@ -276,6 +276,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Xem t&#x1ea5;t c&#x1ea3;"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnXemTatCaBanDocActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnThemBanDoc">
               <Properties>
