@@ -43,7 +43,7 @@ public class TaiLieu {
     }
 
     public void setSoLuong(int soLuong) {
-        this.soLuong = soLuong;
+        this.soLuong = soLuong >= 0 ? soLuong : 0;
     }
 
     public float getGia() {
@@ -51,7 +51,7 @@ public class TaiLieu {
     }
 
     public void setGia(float gia) {
-        this.gia = gia;
+        this.gia = gia >= 0 ? gia : 0;
     }
     
     

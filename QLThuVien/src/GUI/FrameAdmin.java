@@ -12,11 +12,8 @@ import Class.BanDoc;
 import Class.TaiLieu;
 import Class.ThuThu;
 import java.awt.HeadlessException;
-import java.sql.ResultSet;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.sql.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -36,14 +33,13 @@ public class FrameAdmin extends javax.swing.JFrame {
     BanDocBLL banDocBLL = new BanDocBLL();
     TaiLieuBLL taiLieuBLL = new TaiLieuBLL();
     ThuThuBLL thuThuBLL = new ThuThuBLL();
-    ArrayList<BanDoc> listBanDoc = new ArrayList();
-    ArrayList<TaiLieu> listTaiLieu = new ArrayList();
-    ArrayList<ThuThu> listThuThu = new ArrayList();
     DefaultTableModel banDocModel;
     DefaultTableModel taiLieuModel;
     DefaultTableModel thuThuModel;
     BanDoc banDoc = new BanDoc();
-    int row = -1;
+    ThuThu thuThu = new ThuThu();
+    TaiLieu taiLieu = new TaiLieu();
+    int rowBanDoc = -1, rowThuThu = -1, rowTaiLieu = -1;
 
     public FrameAdmin() {
         initComponents();
@@ -59,6 +55,32 @@ public class FrameAdmin extends javax.swing.JFrame {
         banDoc.setLop(txtLop.getText().trim());
         banDoc.setNgaySinh(dcNgaySinhBanDoc.getDate());
         banDoc.setTenBanDoc(txtTenBanDoc.getText().trim());
+    }
+
+    private void layThongTinThuThu() {
+        thuThu.setMaThuThu(txtMaThuThu.getText().trim());
+        thuThu.setTenThuThu(txtTenThuThu.getText().trim());
+        thuThu.setDiaChi(txtDiaChiThuThu.getText().trim());
+        thuThu.setSoDT(txtSoDTThuThu.getText().trim());
+        thuThu.setNgaySinh(dcNgaySinhThuThu.getDate());
+    }
+
+    private void layThongTinTaiLieu() {
+            taiLieu.setMaTaiLieu(txtMaTaiLieu.getText().trim());
+            taiLieu.setTenTaiLieu(txtTenTaiLieu.getText().trim());
+            try {
+                String soLuong = txtSoLuongTaiLieu.getText().trim();
+            taiLieu.setSoLuong(soLuong.equals("") ? 0 : Integer.parseInt(soLuong));
+            } catch (NumberFormatException e) {
+                taiLieu.setSoLuong(0);
+            }
+            taiLieu.setNhaXuatBan(txtNhaXuatBan.getText().trim());
+            try {
+                String gia = txtGia.getText().trim();
+            taiLieu.setGia(gia.equals("") ? 0 : Float.parseFloat(gia));
+            } catch (NumberFormatException e) {
+                taiLieu.setGia(0);
+            }
     }
 
     /**
@@ -100,7 +122,7 @@ public class FrameAdmin extends javax.swing.JFrame {
         txtTimKiemTaiLieu = new javax.swing.JTextField();
         btnTimKiemTaiLieu = new javax.swing.JButton();
         jLabel23 = new javax.swing.JLabel();
-        txtMaTieuLieu = new javax.swing.JTextField();
+        txtMaTaiLieu = new javax.swing.JTextField();
         jScrollPane4 = new javax.swing.JScrollPane();
         tblTaiLieu = new javax.swing.JTable();
         jLabel24 = new javax.swing.JLabel();
@@ -112,7 +134,7 @@ public class FrameAdmin extends javax.swing.JFrame {
         btnXoaTaiLieu = new javax.swing.JButton();
         txtTenTaiLieu = new javax.swing.JTextField();
         txtSoLuongTaiLieu = new javax.swing.JTextField();
-        txtNhaSanXuat = new javax.swing.JTextField();
+        txtNhaXuatBan = new javax.swing.JTextField();
         txtGia = new javax.swing.JTextField();
         PanelQLThuThu = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
@@ -326,7 +348,7 @@ public class FrameAdmin extends javax.swing.JFrame {
                             .addComponent(btnDatLaiMatKhauBanDoc)
                             .addComponent(btnSuaBanDoc)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addGap(36, 36, 36))
+                .addContainerGap())
         );
 
         PannelQLBanDocLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnDatLaiBanDoc, btnDatLaiMatKhauBanDoc, btnSuaBanDoc, btnThemBanDoc, btnXemTatCaBanDoc, btnXoaBanDoc});
@@ -341,13 +363,18 @@ public class FrameAdmin extends javax.swing.JFrame {
 
         btnDatLaiTaiLieu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8-synchronize-48.png"))); // NOI18N
         btnDatLaiTaiLieu.setText("Đặt lại");
+        btnDatLaiTaiLieu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDatLaiTaiLieuActionPerformed(evt);
+            }
+        });
 
         jLabel22.setText("Giá");
 
         txtTimKiemTaiLieu.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
 
         btnTimKiemTaiLieu.setText("Tìm kiếm");
-        btnTimKiemTaiLieu.setNextFocusableComponent(txtMaTieuLieu);
+        btnTimKiemTaiLieu.setNextFocusableComponent(txtMaTaiLieu);
 
         jLabel23.setText("Mã tài liệu");
 
@@ -359,6 +386,11 @@ public class FrameAdmin extends javax.swing.JFrame {
                 "Mã tài liệu", "Tên tài liệu", "Số lượng", "Nhà xuất bản", "Giá"
             }
         ));
+        tblTaiLieu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblTaiLieuMouseClicked(evt);
+            }
+        });
         jScrollPane4.setViewportView(tblTaiLieu);
 
         jLabel24.setText("Tên tài liệu");
@@ -370,6 +402,11 @@ public class FrameAdmin extends javax.swing.JFrame {
 
         btnXemTatCaTaiLieu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8-select-all-48.png"))); // NOI18N
         btnXemTatCaTaiLieu.setText("Xem tất cả");
+        btnXemTatCaTaiLieu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXemTatCaTaiLieuActionPerformed(evt);
+            }
+        });
 
         btnThemTaiLieu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8-plus-48.png"))); // NOI18N
         btnThemTaiLieu.setText("Thêm");
@@ -381,10 +418,20 @@ public class FrameAdmin extends javax.swing.JFrame {
 
         btnSuaTaiLieu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8-wrench-48.png"))); // NOI18N
         btnSuaTaiLieu.setText("Sửa");
+        btnSuaTaiLieu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSuaTaiLieuActionPerformed(evt);
+            }
+        });
 
         btnXoaTaiLieu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8-delete-48.png"))); // NOI18N
         btnXoaTaiLieu.setText("Xóa");
         btnXoaTaiLieu.setName("Xóa"); // NOI18N
+        btnXoaTaiLieu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoaTaiLieuActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout PanelQLTaiLieuLayout = new javax.swing.GroupLayout(PanelQLTaiLieu);
         PanelQLTaiLieu.setLayout(PanelQLTaiLieuLayout);
@@ -409,9 +456,9 @@ public class FrameAdmin extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addGroup(PanelQLTaiLieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtTenTaiLieu, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtMaTieuLieu, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtMaTaiLieu, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtSoLuongTaiLieu, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtNhaSanXuat, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtNhaXuatBan, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtGia, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(PanelQLTaiLieuLayout.createSequentialGroup()
                                 .addComponent(txtTimKiemTaiLieu, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -435,7 +482,7 @@ public class FrameAdmin extends javax.swing.JFrame {
 
         PanelQLTaiLieuLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnDatLaiTaiLieu, btnSuaTaiLieu, btnThemTaiLieu, btnXemTatCaTaiLieu, btnXoaTaiLieu});
 
-        PanelQLTaiLieuLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {txtGia, txtMaTieuLieu, txtNhaSanXuat, txtSoLuongTaiLieu, txtTenTaiLieu});
+        PanelQLTaiLieuLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {txtGia, txtMaTaiLieu, txtNhaXuatBan, txtSoLuongTaiLieu, txtTenTaiLieu});
 
         PanelQLTaiLieuLayout.setVerticalGroup(
             PanelQLTaiLieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -451,28 +498,27 @@ public class FrameAdmin extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(PanelQLTaiLieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(PanelQLTaiLieuLayout.createSequentialGroup()
-                                .addGroup(PanelQLTaiLieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel23)
-                                    .addGroup(PanelQLTaiLieuLayout.createSequentialGroup()
-                                        .addGap(41, 41, 41)
-                                        .addComponent(jLabel24)))
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel25)
-                                .addGap(27, 27, 27)
-                                .addComponent(jLabel21)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel22))
+                                .addGap(41, 41, 41)
+                                .addComponent(jLabel24))
                             .addGroup(PanelQLTaiLieuLayout.createSequentialGroup()
-                                .addComponent(txtMaTieuLieu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(PanelQLTaiLieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txtMaTaiLieu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel23))
                                 .addGap(18, 18, 18)
                                 .addComponent(txtTenTaiLieu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(txtSoLuongTaiLieu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(PanelQLTaiLieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txtSoLuongTaiLieu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel25))
                                 .addGap(18, 18, 18)
-                                .addComponent(txtNhaSanXuat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(PanelQLTaiLieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txtNhaXuatBan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel21))
                                 .addGap(18, 18, 18)
-                                .addComponent(txtGia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(PanelQLTaiLieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txtGia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel22))))
+                        .addGap(18, 18, 18)
                         .addGroup(PanelQLTaiLieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnXemTatCaTaiLieu)
                             .addComponent(btnThemTaiLieu))
@@ -483,12 +529,12 @@ public class FrameAdmin extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnSuaTaiLieu))
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addGap(48, 48, 48))
+                .addContainerGap())
         );
 
         PanelQLTaiLieuLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnDatLaiTaiLieu, btnSuaTaiLieu, btnThemTaiLieu, btnXemTatCaTaiLieu, btnXoaTaiLieu});
 
-        PanelQLTaiLieuLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {txtGia, txtMaTieuLieu, txtNhaSanXuat, txtSoLuongTaiLieu, txtTenTaiLieu});
+        PanelQLTaiLieuLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {txtGia, txtMaTaiLieu, txtNhaXuatBan, txtSoLuongTaiLieu, txtTenTaiLieu});
 
         jTabbedPane2.addTab("Quản lý tài liệu", PanelQLTaiLieu);
 
@@ -496,16 +542,31 @@ public class FrameAdmin extends javax.swing.JFrame {
 
         btnDatLaiThuThu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8-synchronize-48.png"))); // NOI18N
         btnDatLaiThuThu.setText("Đặt lại");
+        btnDatLaiThuThu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDatLaiThuThuActionPerformed(evt);
+            }
+        });
 
         jLabel17.setText("Số điện thoại");
 
         btnDatLaiMatKhauThuThu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8-reset-48.png"))); // NOI18N
         btnDatLaiMatKhauThuThu.setText("Đặt lại mật khẩu");
+        btnDatLaiMatKhauThuThu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDatLaiMatKhauThuThuActionPerformed(evt);
+            }
+        });
 
         txtTimKiemThuThu.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
 
         btnTimKiemThuThu.setText("Tìm kiếm");
         btnTimKiemThuThu.setNextFocusableComponent(txtMaThuThu);
+        btnTimKiemThuThu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTimKiemThuThuActionPerformed(evt);
+            }
+        });
 
         jLabel18.setText("Mã thủ thư");
 
@@ -514,9 +575,14 @@ public class FrameAdmin extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Mã bạn đọc", "Tên bạn đọc", "Ngày sinh", "Địa chỉ", "Lớp"
+                "Mã thủ thư", "Tên thủ thư", "Ngày sinh", "Địa chỉ", "Số điện thoại"
             }
         ));
+        tblThuThu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblThuThuMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(tblThuThu);
 
         jLabel19.setText("Tên thủ thư");
@@ -528,16 +594,36 @@ public class FrameAdmin extends javax.swing.JFrame {
 
         btnXemTatCaThuThu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8-select-all-48.png"))); // NOI18N
         btnXemTatCaThuThu.setText("Xem tất cả");
+        btnXemTatCaThuThu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXemTatCaThuThuActionPerformed(evt);
+            }
+        });
 
         btnThemThuThu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8-plus-48.png"))); // NOI18N
         btnThemThuThu.setText("Thêm");
+        btnThemThuThu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemThuThuActionPerformed(evt);
+            }
+        });
 
         btnSuaThuThu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8-wrench-48.png"))); // NOI18N
         btnSuaThuThu.setText("Sửa");
+        btnSuaThuThu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSuaThuThuActionPerformed(evt);
+            }
+        });
 
         btnXoaThuThu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8-delete-48.png"))); // NOI18N
         btnXoaThuThu.setText("Xóa");
         btnXoaThuThu.setName("Xóa"); // NOI18N
+        btnXoaThuThu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoaThuThuActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout PanelQLThuThuLayout = new javax.swing.GroupLayout(PanelQLThuThu);
         PanelQLThuThu.setLayout(PanelQLThuThuLayout);
@@ -606,20 +692,19 @@ public class FrameAdmin extends javax.swing.JFrame {
                             .addGroup(PanelQLThuThuLayout.createSequentialGroup()
                                 .addComponent(txtMaThuThu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(txtTenThuThu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(PanelQLThuThuLayout.createSequentialGroup()
-                                .addComponent(jLabel18)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel19)))
+                                .addGroup(PanelQLThuThuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txtTenThuThu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel19)))
+                            .addComponent(jLabel18))
                         .addGap(18, 18, 18)
-                        .addGroup(PanelQLThuThuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(PanelQLThuThuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(dcNgaySinhThuThu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel20))
-                        .addGap(19, 19, 19)
+                        .addGap(18, 18, 18)
                         .addGroup(PanelQLThuThuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtDiaChiThuThu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel16))
-                        .addGap(11, 11, 11)
+                        .addGap(18, 18, 18)
                         .addGroup(PanelQLThuThuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtSoDTThuThu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel17))
@@ -636,7 +721,7 @@ public class FrameAdmin extends javax.swing.JFrame {
                             .addComponent(btnDatLaiMatKhauThuThu)
                             .addComponent(btnSuaThuThu)))
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addGap(37, 37, 37))
+                .addContainerGap())
         );
 
         PanelQLThuThuLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnDatLaiMatKhauThuThu, btnDatLaiThuThu, btnSuaThuThu, btnThemThuThu, btnXemTatCaThuThu, btnXoaThuThu});
@@ -659,6 +744,24 @@ public class FrameAdmin extends javax.swing.JFrame {
 
     private void btnThemTaiLieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemTaiLieuActionPerformed
         // TODO add your handling code here:
+        try {
+            if (txtMaTaiLieu.getText().trim().equals("")) {
+                JOptionPane.showMessageDialog(null, "Mã tài liệu không được trống", "Thông báo", JOptionPane.OK_OPTION);
+            } else if (txtTenTaiLieu.getText().trim().equals("")) {
+                JOptionPane.showMessageDialog(null, "Tên tài liệu không được trống", "Thông báo", JOptionPane.OK_OPTION);
+            } else {
+                layThongTinTaiLieu();
+                if (taiLieuBLL.themTaiLieu(taiLieu)) {
+                    JOptionPane.showMessageDialog(null, "Thêm thành công");
+                    btnXemTatCaTaiLieuActionPerformed(evt);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Trùng mã tài liệu");
+                    JOptionPane.showMessageDialog(null, "Thêm không thành công");
+                }
+            }
+        } catch (HeadlessException e) {
+            JOptionPane.showMessageDialog(null, e.toString());
+        }
     }//GEN-LAST:event_btnThemTaiLieuActionPerformed
 
     private void btnXemTatCaBanDocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXemTatCaBanDocActionPerformed
@@ -672,15 +775,15 @@ public class FrameAdmin extends javax.swing.JFrame {
 
     private void btnThemBanDocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemBanDocActionPerformed
         // TODO add your handling code here:
-        layThongTinBanDoc();
         try {
-            if (banDoc.getMaBanDoc().equals("")) {
+            if (txtMaBanDoc.getText().trim().equals("")) {
                 JOptionPane.showMessageDialog(null, "Mã bạn đọc không được trống", "Thông báo", JOptionPane.OK_OPTION);
-            } else if (banDoc.getTenBanDoc().equals("")) {
+            } else if (txtTenBanDoc.getText().trim().equals("")) {
                 JOptionPane.showMessageDialog(null, "Tên bạn đọc không được trống", "Thông báo", JOptionPane.OK_OPTION);
-            } else if (banDoc.getNgaySinh() == null) {
+            } else if (dcNgaySinhBanDoc.getDate() == null) {
                 JOptionPane.showMessageDialog(null, "Ngày sinh bạn đọc không được trống", "Thông báo", JOptionPane.OK_OPTION);
-            } else {
+            } else {    
+            layThongTinBanDoc();
                 if (banDocBLL.themBanDoc(banDoc)) {
                     JOptionPane.showMessageDialog(null, "Thêm thành công");
                     btnXemTatCaBanDocActionPerformed(evt);
@@ -708,7 +811,7 @@ public class FrameAdmin extends javax.swing.JFrame {
         // TODO add your handling code here:
         int i = JOptionPane.showConfirmDialog(null, "Bạn có chắc xóa bạn đọc: " + txtMaBanDoc.getText(), "Thông báo", JOptionPane.YES_NO_OPTION);
         if (i == 0) {
-            if (banDocBLL.xoaBanDoc(tblBanDoc.getValueAt(row, 0).toString())) {
+            if (banDocBLL.xoaBanDoc(tblBanDoc.getValueAt(rowBanDoc, 0).toString())) {
                 JOptionPane.showMessageDialog(null, "Xóa thành công");
                 btnXemTatCaBanDocActionPerformed(evt);
             } else {
@@ -737,13 +840,13 @@ public class FrameAdmin extends javax.swing.JFrame {
 
     private void tblBanDocMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblBanDocMouseClicked
         // TODO add your handling code here:
-        row = tblBanDoc.getSelectedRow();
-        txtMaBanDoc.setText(banDocModel.getValueAt(row, 0).toString());
-        txtTenBanDoc.setText(banDocModel.getValueAt(row, 1).toString());
-        txtDiaChiBanDoc.setText(banDocModel.getValueAt(row, 3).toString());
-        txtLop.setText(banDocModel.getValueAt(row, 4).toString());
+        rowBanDoc = tblBanDoc.getSelectedRow();
+        txtMaBanDoc.setText(banDocModel.getValueAt(rowBanDoc, 0).toString());
+        txtTenBanDoc.setText(banDocModel.getValueAt(rowBanDoc, 1).toString());
+        txtDiaChiBanDoc.setText(banDocModel.getValueAt(rowBanDoc, 3).toString());
+        txtLop.setText(banDocModel.getValueAt(rowBanDoc, 4).toString());
         try {
-            dcNgaySinhBanDoc.setDate(new SimpleDateFormat("yyyy-MM-dd").parse(banDocModel.getValueAt(row, 2).toString()));
+            dcNgaySinhBanDoc.setDate(new SimpleDateFormat("yyyy-MM-dd").parse(banDocModel.getValueAt(rowBanDoc, 2).toString()));
         } catch (ParseException ex) {
             Logger.getLogger(FrameAdmin.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -753,11 +856,11 @@ public class FrameAdmin extends javax.swing.JFrame {
         // TODO add your handling code here:
         layThongTinBanDoc();
         try {
-            if (banDoc.getMaBanDoc().equals("")) {
+            if (txtMaBanDoc.getText().trim().equals("")) {
                 JOptionPane.showMessageDialog(null, "Mã bạn đọc không được trống", "Thông báo", JOptionPane.OK_OPTION);
-            } else if (banDoc.getTenBanDoc().equals("")) {
+            } else if (txtTenBanDoc.getText().trim().equals("")) {
                 JOptionPane.showMessageDialog(null, "Tên bạn đọc không được trống", "Thông báo", JOptionPane.OK_OPTION);
-            } else if (banDoc.getNgaySinh() == null) {
+            } else if (dcNgaySinhBanDoc.getDate() == null) {
                 JOptionPane.showMessageDialog(null, "Ngày sinh bạn đọc không được trống", "Thông báo", JOptionPane.OK_OPTION);
             } else {
                 int i = JOptionPane.showConfirmDialog(null, "Bạn có muốn sửa", "Thông báo", JOptionPane.YES_NO_OPTION);
@@ -779,8 +882,202 @@ public class FrameAdmin extends javax.swing.JFrame {
     private void btnTimKiemBanDocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemBanDocActionPerformed
         // TODO add your handling code here:
         banDocModel.setRowCount(0);
-        tblBanDoc.setModel(banDocBLL.timKiemBanDoc(tblBanDoc, txtTimKiemBanDoc.getText().trim()));
+        banDocModel = banDocBLL.timKiemBanDoc(tblBanDoc, txtTimKiemBanDoc.getText().trim());
+
     }//GEN-LAST:event_btnTimKiemBanDocActionPerformed
+
+    private void btnXemTatCaThuThuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXemTatCaThuThuActionPerformed
+        // TODO add your handling code here:
+        thuThuModel.setRowCount(0);
+        thuThuModel = thuThuBLL.xemTatCaThuThu(tblThuThu);
+        if (thuThuModel.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Không có thủ thư nào");
+        }
+    }//GEN-LAST:event_btnXemTatCaThuThuActionPerformed
+
+    private void btnThemThuThuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemThuThuActionPerformed
+        // TODO add your handling code here:
+        
+        try {
+            if (txtMaThuThu.getText().trim().equals("")) {
+                JOptionPane.showMessageDialog(null, "Mã thủ thư không được trống", "Thông báo", JOptionPane.OK_OPTION);
+            } else if (txtTenThuThu.getText().trim().equals("")) {
+                JOptionPane.showMessageDialog(null, "Tên thủ thư không được trống", "Thông báo", JOptionPane.OK_OPTION);
+            } else if (dcNgaySinhThuThu.getDate() == null) {
+                JOptionPane.showMessageDialog(null, "Ngày sinh thủ thư không được trống", "Thông báo", JOptionPane.OK_OPTION);
+            } else {
+                if (thuThuBLL.themThuThu(thuThu)) {
+                    layThongTinThuThu();
+                    JOptionPane.showMessageDialog(null, "Thêm thành công");
+                    btnXemTatCaThuThuActionPerformed(evt);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Thêm không thành công");
+                }
+
+            }
+        } catch (HeadlessException e) {
+            JOptionPane.showMessageDialog(null, e.toString());
+        }
+    }//GEN-LAST:event_btnThemThuThuActionPerformed
+
+    private void btnDatLaiThuThuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDatLaiThuThuActionPerformed
+        // TODO add your handling code here:
+        txtMaThuThu.setText("");
+        txtTenThuThu.setText("");
+        txtDiaChiThuThu.setText("");
+        txtSoDTThuThu.setText("");
+        dcNgaySinhThuThu.setDate(null);
+    }//GEN-LAST:event_btnDatLaiThuThuActionPerformed
+
+    private void btnSuaThuThuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaThuThuActionPerformed
+        // TODO add your handling code here:
+        
+        try {
+             if (txtMaThuThu.getText().trim().equals("")) {
+                JOptionPane.showMessageDialog(null, "Mã thủ thư không được trống", "Thông báo", JOptionPane.OK_OPTION);
+            } else if (txtTenThuThu.getText().trim().equals("")) {
+                JOptionPane.showMessageDialog(null, "Tên thủ thư không được trống", "Thông báo", JOptionPane.OK_OPTION);
+            } else if (dcNgaySinhThuThu.getDate() == null) {
+                JOptionPane.showMessageDialog(null, "Ngày sinh thủ thư không được trống", "Thông báo", JOptionPane.OK_OPTION);
+            } else {
+                int i = JOptionPane.showConfirmDialog(null, "Bạn có muốn sửa", "Thông báo", JOptionPane.YES_NO_OPTION);
+                if (i == 0) {
+                    layThongTinThuThu();
+                    if (thuThuBLL.suaThuThu(thuThu)) {
+                        JOptionPane.showMessageDialog(null, "Sửa thành công");
+                        btnXemTatCaThuThuActionPerformed(evt);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Sửa không thành công");
+                    }
+                }
+
+            }
+        } catch (HeadlessException e) {
+            JOptionPane.showMessageDialog(null, e.toString());
+        }
+    }//GEN-LAST:event_btnSuaThuThuActionPerformed
+
+    private void tblThuThuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblThuThuMouseClicked
+        // TODO add your handling code here:
+        rowThuThu = tblThuThu.getSelectedRow();
+        txtMaThuThu.setText(thuThuModel.getValueAt(rowThuThu, 0).toString());
+        txtTenThuThu.setText(thuThuModel.getValueAt(rowThuThu, 1).toString());
+        txtDiaChiThuThu.setText(thuThuModel.getValueAt(rowThuThu, 3).toString());
+        txtSoDTThuThu.setText(thuThuModel.getValueAt(rowThuThu, 4).toString());
+        try {
+            dcNgaySinhThuThu.setDate(new SimpleDateFormat("yyyy-MM-dd").parse(thuThuModel.getValueAt(rowThuThu, 2).toString()));
+        } catch (ParseException ex) {
+            Logger.getLogger(FrameAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_tblThuThuMouseClicked
+
+    private void btnXoaThuThuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaThuThuActionPerformed
+        // TODO add your handling code here:
+        int i = JOptionPane.showConfirmDialog(null, "Bạn có chắc xóa thủ thư: " + txtMaThuThu.getText(), "Thông báo", JOptionPane.YES_NO_OPTION);
+        if (i == 0) {
+            if (thuThuBLL.xoaThuThu(txtMaThuThu.getText().trim())) {
+                JOptionPane.showMessageDialog(null, "Xóa thành công");
+                btnXemTatCaThuThuActionPerformed(evt);
+            } else {
+                JOptionPane.showMessageDialog(null, "Xóa không thành công");
+            }
+        }
+    }//GEN-LAST:event_btnXoaThuThuActionPerformed
+
+    private void btnDatLaiMatKhauThuThuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDatLaiMatKhauThuThuActionPerformed
+        // TODO add your handling code here:
+        layThongTinThuThu();
+        try {
+            int i = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn đặt lại?", "Thông báo", JOptionPane.YES_NO_OPTION);
+            if (i == 0) {
+                if (thuThuBLL.datLaiMatKhau(thuThu)) {
+                    JOptionPane.showMessageDialog(null, "Đặt lại thành công");
+                    btnXemTatCaThuThuActionPerformed(evt);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Đặt lại không thành công");
+                }
+            }
+        } catch (HeadlessException e) {
+            JOptionPane.showMessageDialog(null, e.toString());
+        }
+
+    }//GEN-LAST:event_btnDatLaiMatKhauThuThuActionPerformed
+
+    private void btnTimKiemThuThuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemThuThuActionPerformed
+        // TODO add your handling code here:
+        thuThuModel.setRowCount(0);
+        thuThuModel = thuThuBLL.timKiemThuThu(tblThuThu, txtTimKiemThuThu.getText().trim());
+        if (thuThuModel.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Không có thủ thư nào");
+        }
+    }//GEN-LAST:event_btnTimKiemThuThuActionPerformed
+
+    private void btnXemTatCaTaiLieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXemTatCaTaiLieuActionPerformed
+        // TODO add your handling code here:
+        taiLieuModel.setRowCount(0);
+        taiLieuModel = taiLieuBLL.xemTatCaTaiLieu(tblTaiLieu);
+        if (taiLieuModel.getRowCount() < 0) {
+            JOptionPane.showMessageDialog(null, "Không có tài liệu nào");
+        }
+    }//GEN-LAST:event_btnXemTatCaTaiLieuActionPerformed
+
+    private void btnDatLaiTaiLieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDatLaiTaiLieuActionPerformed
+        // TODO add your handling code here:
+        txtMaTaiLieu.setText("");
+        txtTenTaiLieu.setText("");
+        txtSoLuongTaiLieu.setText("");
+        txtNhaXuatBan.setText("");
+        txtGia.setText("");
+    }//GEN-LAST:event_btnDatLaiTaiLieuActionPerformed
+
+    private void btnXoaTaiLieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaTaiLieuActionPerformed
+        // TODO add your handling code here:
+        int i = JOptionPane.showConfirmDialog(null, "Bạn có chắc xóa tài liệu: " + txtMaTaiLieu.getText(), "Thông báo", JOptionPane.YES_NO_OPTION);
+        if (i == 0) {
+            if (taiLieuBLL.xoaTaiLieu(txtMaTaiLieu.getText().trim())) {
+                JOptionPane.showMessageDialog(null, "Xóa thành công");
+                btnXemTatCaTaiLieuActionPerformed(evt);
+            } else {
+                JOptionPane.showMessageDialog(null, "Xóa không thành công");
+            }
+        }
+    }//GEN-LAST:event_btnXoaTaiLieuActionPerformed
+
+    private void btnSuaTaiLieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaTaiLieuActionPerformed
+        // TODO add your handling code here:
+        layThongTinTaiLieu();
+        try {
+            if (taiLieu.getMaTaiLieu().equals("")) {
+                JOptionPane.showMessageDialog(null, "Mã tài liệu không được trống", "Thông báo", JOptionPane.OK_OPTION);
+            } else if (taiLieu.getTenTaiLieu().equals("")) {
+                JOptionPane.showMessageDialog(null, "Tên tài liệu không được trống", "Thông báo", JOptionPane.OK_OPTION);
+            } else {
+                int i = JOptionPane.showConfirmDialog(null, "Bạn có muốn sửa", "Thông báo", JOptionPane.YES_NO_OPTION);
+                if (i == 0) {
+                    if (taiLieuBLL.suaTaiLieu(taiLieu)) {
+                        JOptionPane.showMessageDialog(null, "Sửa thành công");
+                        btnXemTatCaTaiLieuActionPerformed(evt);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Sửa không thành công");
+                    }
+                }
+
+            }
+        } catch (HeadlessException e) {
+            JOptionPane.showMessageDialog(null, e.toString());
+        }
+    }//GEN-LAST:event_btnSuaTaiLieuActionPerformed
+
+    private void tblTaiLieuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTaiLieuMouseClicked
+        // TODO add your handling code here:
+        rowTaiLieu = tblTaiLieu.getSelectedRow();
+        txtMaTaiLieu.setText(taiLieuModel.getValueAt(rowTaiLieu, 0).toString());
+        txtTenTaiLieu.setText(taiLieuModel.getValueAt(rowTaiLieu, 1).toString());
+        txtSoLuongTaiLieu.setText(taiLieuModel.getValueAt(rowTaiLieu, 2).toString());
+        txtNhaXuatBan.setText(taiLieuModel.getValueAt(rowTaiLieu, 3).toString());
+        txtGia.setText(taiLieuModel.getValueAt(rowTaiLieu, 4).toString());
+
+    }//GEN-LAST:event_tblTaiLieuMouseClicked
 
     /**
      * @param args the command line arguments
@@ -858,9 +1155,9 @@ public class FrameAdmin extends javax.swing.JFrame {
     private javax.swing.JTextField txtGia;
     private javax.swing.JTextField txtLop;
     private javax.swing.JTextField txtMaBanDoc;
+    private javax.swing.JTextField txtMaTaiLieu;
     private javax.swing.JTextField txtMaThuThu;
-    private javax.swing.JTextField txtMaTieuLieu;
-    private javax.swing.JTextField txtNhaSanXuat;
+    private javax.swing.JTextField txtNhaXuatBan;
     private javax.swing.JTextField txtSoDTThuThu;
     private javax.swing.JTextField txtSoLuongTaiLieu;
     private javax.swing.JTextField txtTenBanDoc;
