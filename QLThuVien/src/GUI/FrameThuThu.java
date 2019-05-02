@@ -9,13 +9,27 @@ package GUI;
  *
  * @author langt
  */
+import BLL.AdminBLL;
+import BLL.BanDocBLL;
+import BLL.TaiLieuBLL;
+import BLL.ThuThuBLL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+
 public class FrameThuThu extends javax.swing.JFrame {
 
     /**
      * Creates new form FrameThuThu
-     */
+     */ 
+    BanDocBLL banDocBLL = new BanDocBLL();
+    TaiLieuBLL taiLieuBLL = new TaiLieuBLL();
+    ThuThuBLL thuThuBLL = new ThuThuBLL();
+    
     public FrameThuThu() {
-        initComponents();
+        initComponents(); 
+        setLocationRelativeTo(this);
     }
 
     /**
@@ -27,17 +41,191 @@ public class FrameThuThu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        PanelQLThuThu = new javax.swing.JPanel();
+        jLabel16 = new javax.swing.JLabel();
+        btnDatLaiThuThu = new javax.swing.JButton();
+        jLabel17 = new javax.swing.JLabel();
+        btnDatLaiMatKhauThuThu = new javax.swing.JButton();
+        txtSoDTThuThu = new javax.swing.JTextField();
+        txtTimKiemThuThu = new javax.swing.JTextField();
+        btnTimKiemThuThu = new javax.swing.JButton();
+        jLabel18 = new javax.swing.JLabel();
+        txtMaThuThu = new javax.swing.JTextField();
+        txtTenThuThu = new javax.swing.JTextField();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tblThuThu = new javax.swing.JTable();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        btnXemTatCaThuThu = new javax.swing.JButton();
+        btnThemThuThu = new javax.swing.JButton();
+        btnSuaThuThu = new javax.swing.JButton();
+        txtDiaChiThuThu = new javax.swing.JTextField();
+        btnXoaThuThu = new javax.swing.JButton();
+        dcNgaySinhThuThu = new org.netbeans.modules.form.InvalidComponent();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel16.setText("Địa chỉ");
+
+        btnDatLaiThuThu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8-synchronize-48.png"))); // NOI18N
+        btnDatLaiThuThu.setText("Đặt lại");
+
+        jLabel17.setText("Số điện thoại");
+
+        btnDatLaiMatKhauThuThu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8-reset-48.png"))); // NOI18N
+        btnDatLaiMatKhauThuThu.setText("Đặt lại mật khẩu");
+
+        txtTimKiemThuThu.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+
+        btnTimKiemThuThu.setText("Tìm kiếm");
+
+        jLabel18.setText("Mã thủ thư");
+
+        tblThuThu.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Mã bạn đọc", "Tên thủ thư", "Ngày sinh", "Địa chỉ", "Số điện thoại"
+            }
+        ));
+        jScrollPane3.setViewportView(tblThuThu);
+
+        jLabel19.setText("Tên thủ thư");
+
+        jLabel20.setText("Ngày sinh");
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel6.setText("Quản lý thủ thư");
+
+        btnXemTatCaThuThu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8-select-all-48.png"))); // NOI18N
+        btnXemTatCaThuThu.setText("Xem tất cả");
+
+        btnThemThuThu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8-plus-48.png"))); // NOI18N
+        btnThemThuThu.setText("Thêm");
+
+        btnSuaThuThu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8-wrench-48.png"))); // NOI18N
+        btnSuaThuThu.setText("Sửa");
+
+        btnXoaThuThu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8-delete-48.png"))); // NOI18N
+        btnXoaThuThu.setText("Xóa");
+        btnXoaThuThu.setName("Xóa"); // NOI18N
+
+        javax.swing.GroupLayout PanelQLThuThuLayout = new javax.swing.GroupLayout(PanelQLThuThu);
+        PanelQLThuThu.setLayout(PanelQLThuThuLayout);
+        PanelQLThuThuLayout.setHorizontalGroup(
+            PanelQLThuThuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PanelQLThuThuLayout.createSequentialGroup()
+                .addGap(375, 375, 375)
+                .addComponent(jLabel6)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(PanelQLThuThuLayout.createSequentialGroup()
+                .addGroup(PanelQLThuThuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PanelQLThuThuLayout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addGroup(PanelQLThuThuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(PanelQLThuThuLayout.createSequentialGroup()
+                                .addComponent(txtTimKiemThuThu, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnTimKiemThuThu))
+                            .addGroup(PanelQLThuThuLayout.createSequentialGroup()
+                                .addGroup(PanelQLThuThuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel18)
+                                    .addComponent(jLabel19)
+                                    .addComponent(jLabel20)
+                                    .addGroup(PanelQLThuThuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel17, javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jLabel16)))
+                                .addGap(18, 18, 18)
+                                .addGroup(PanelQLThuThuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtSoDTThuThu, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtMaThuThu, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtTenThuThu)
+                                    .addComponent(dcNgaySinhThuThu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txtDiaChiThuThu, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(PanelQLThuThuLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(PanelQLThuThuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnXemTatCaThuThu)
+                            .addComponent(btnDatLaiThuThu)
+                            .addComponent(btnDatLaiMatKhauThuThu, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(PanelQLThuThuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnThemThuThu, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnXoaThuThu)
+                            .addComponent(btnSuaThuThu))))
+                .addGap(10, 10, 10)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 612, Short.MAX_VALUE))
+        );
+        PanelQLThuThuLayout.setVerticalGroup(
+            PanelQLThuThuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PanelQLThuThuLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(PanelQLThuThuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PanelQLThuThuLayout.createSequentialGroup()
+                        .addGroup(PanelQLThuThuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtTimKiemThuThu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnTimKiemThuThu))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(PanelQLThuThuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(PanelQLThuThuLayout.createSequentialGroup()
+                                .addComponent(txtMaThuThu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtTenThuThu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(PanelQLThuThuLayout.createSequentialGroup()
+                                .addComponent(jLabel18)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel19)))
+                        .addGap(18, 18, 18)
+                        .addGroup(PanelQLThuThuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(dcNgaySinhThuThu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel20))
+                        .addGap(19, 19, 19)
+                        .addGroup(PanelQLThuThuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtDiaChiThuThu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel16))
+                        .addGap(11, 11, 11)
+                        .addGroup(PanelQLThuThuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtSoDTThuThu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel17))
+                        .addGap(18, 18, 18)
+                        .addGroup(PanelQLThuThuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnXemTatCaThuThu)
+                            .addComponent(btnThemThuThu))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(PanelQLThuThuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnDatLaiThuThu)
+                            .addComponent(btnXoaThuThu))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(PanelQLThuThuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnDatLaiMatKhauThuThu)
+                            .addComponent(btnSuaThuThu)))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE))
+                .addGap(37, 37, 37))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 976, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(PanelQLThuThu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 477, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(PanelQLThuThu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
         pack();
@@ -79,5 +267,27 @@ public class FrameThuThu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel PanelQLThuThu;
+    private javax.swing.JButton btnDatLaiMatKhauThuThu;
+    private javax.swing.JButton btnDatLaiThuThu;
+    private javax.swing.JButton btnSuaThuThu;
+    private javax.swing.JButton btnThemThuThu;
+    private javax.swing.JButton btnTimKiemThuThu;
+    private javax.swing.JButton btnXemTatCaThuThu;
+    private javax.swing.JButton btnXoaThuThu;
+    private org.netbeans.modules.form.InvalidComponent dcNgaySinhThuThu;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTable tblThuThu;
+    private javax.swing.JTextField txtDiaChiThuThu;
+    private javax.swing.JTextField txtMaThuThu;
+    private javax.swing.JTextField txtSoDTThuThu;
+    private javax.swing.JTextField txtTenThuThu;
+    private javax.swing.JTextField txtTimKiemThuThu;
     // End of variables declaration//GEN-END:variables
 }
