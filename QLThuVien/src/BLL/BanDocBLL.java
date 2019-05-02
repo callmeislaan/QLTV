@@ -12,6 +12,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTable;
@@ -44,6 +45,7 @@ public class BanDocBLL {
     public DefaultTableModel xemTatCaBanDoc(JTable tbl) {
         DefaultTableModel model = null;
         try {
+            
             String sql = "select * from BanDoc";
             conn = dal.getConnection();
             ResultSet rs = dal.getTable(conn, sql);
@@ -55,20 +57,49 @@ public class BanDocBLL {
         return model;
     }
     
-    public boolean themBanDoc(BanDoc banDoc) {
-            int i = 0;
+    public DefaultTableModel timKiemBanDoc(JTable tbl, String timKiem) {
+        DefaultTableModel model = null;
         try {
-            String sql = "insert into BanDoc(maBanDoc, tenBanDoc, ngaySinh, diaChi, lop)"
-                    + " values (N'" + banDoc.getMaBanDoc() + "', N'" + banDoc.getTenBanDoc() + "',"
-                    + " '" + new Date(banDoc.getNgaySinh().getTime()) + "', N'" + banDoc.getDiaChi() +
-                    "', N'" + banDoc.getLop() + "')";
+            
+            String sql = "select * from BanDoc where maBanDoc like '%" + timKiem + "%'"
+                    + "or tenBanDoc like '%" + timKiem + "%'";
             conn = dal.getConnection();
-            PreparedStatement ps = conn.prepareStatement(sql);
-            i = ps.executeUpdate();
+            ResultSet rs = dal.getTable(conn, sql);
+            model = layDuLieuBanDoc(rs, tbl);
+            conn.close();
         } catch (SQLException ex) {
             Logger.getLogger(BanDocBLL.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return i > 0;
+        return model;
     }
     
+    public boolean themBanDoc(BanDoc banDoc) {
+        String sql = "insert into BanDoc(maBanDoc, tenBanDoc, ngaySinh, diaChi, lop)"
+                + " values (N'" + banDoc.getMaBanDoc() + "', N'" + banDoc.getTenBanDoc() + "',"
+                + " '" + new Date(banDoc.getNgaySinh().getTime()) + "', N'" + banDoc.getDiaChi() +
+                "', N'" + banDoc.getLop() + "');"
+                + "insert into TaiKhoan values (N'" + banDoc.getMaBanDoc() + "',"
+                + " '" + new SimpleDateFormat("ddMMyyyy").format(banDoc.getNgaySinh()) + "', 'bd')";
+        return dal.excuteNonQuery(sql);
+    }
+    
+    public boolean xoaBanDoc(String maBanDoc) {
+        String sql = "delete BanDoc where maBanDoc = '" + maBanDoc + "';"
+                + "delete TaiKhoan where taiKhoan = '" + maBanDoc + "'";
+        return dal.excuteNonQuery(sql);
+    }
+    
+    public boolean datLaiMatKhau(BanDoc banDoc) {
+        String sql = "update TaiKhoan set matKhau = '" + new SimpleDateFormat("ddMMyyyy").format(banDoc.getNgaySinh())
+               + "' where taiKhoan = N'" + banDoc.getMaBanDoc() + "'";
+        return dal.excuteNonQuery(sql);
+    }
+    
+    public boolean suaBanDoc(BanDoc banDoc) {
+         String sql = "update BanDoc "
+                + "set tenBanDoc = N'" + banDoc.getTenBanDoc() + "',"
+                + " ngaySinh = '" + new Date(banDoc.getNgaySinh().getTime()) + "', diaChi = N'" + banDoc.getDiaChi() +
+                "', lop = N'" + banDoc.getLop() + "' where maBanDoc = '" + banDoc.getMaBanDoc() + "';";
+        return dal.excuteNonQuery(sql);
+    }
 }

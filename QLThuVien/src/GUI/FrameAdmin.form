@@ -60,7 +60,7 @@
                               <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="txtTimKiem" min="-2" pref="253" max="-2" attributes="0"/>
+                                      <Component id="txtTimKiemBanDoc" min="-2" pref="253" max="-2" attributes="0"/>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Component id="btnTimKiemBanDoc" min="-2" max="-2" attributes="0"/>
                                   </Group>
@@ -119,7 +119,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="txtTimKiem" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtTimKiemBanDoc" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="btnTimKiemBanDoc" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -266,6 +266,9 @@
                       <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tblBanDocMouseClicked"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
@@ -298,6 +301,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="S&#x1eed;a"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSuaBanDocActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnXoaBanDoc">
               <Properties>
@@ -310,6 +316,9 @@
               <AccessibilityProperties>
                 <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="btnXoa"/>
               </AccessibilityProperties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnXoaBanDocActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnDatLaiBanDoc">
               <Properties>
@@ -318,6 +327,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="&#x110;&#x1eb7;t l&#x1ea1;i"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDatLaiBanDocActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnDatLaiMatKhauBanDoc">
               <Properties>
@@ -326,8 +338,11 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="&#x110;&#x1eb7;t l&#x1ea1;i m&#x1ead;t kh&#x1ea9;u"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDatLaiMatKhauBanDocActionPerformed"/>
+              </Events>
             </Component>
-            <Component class="javax.swing.JTextField" name="txtTimKiem">
+            <Component class="javax.swing.JTextField" name="txtTimKiemBanDoc">
               <Properties>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                   <Color id="Text Cursor"/>
@@ -341,6 +356,9 @@
                   <ComponentRef name="txtMaBanDoc"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTimKiemBanDocActionPerformed"/>
+              </Events>
             </Component>
             <Component class="com.toedter.calendar.JDateChooser" name="dcNgaySinhBanDoc">
             </Component>

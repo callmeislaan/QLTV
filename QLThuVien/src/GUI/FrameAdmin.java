@@ -11,10 +11,15 @@ import BLL.ThuThuBLL;
 import Class.BanDoc;
 import Class.TaiLieu;
 import Class.ThuThu;
+import java.awt.HeadlessException;
 import java.sql.ResultSet;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.sql.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableModel;
@@ -28,7 +33,6 @@ public class FrameAdmin extends javax.swing.JFrame {
     /**
      * Creates new form FrameAdmin
      */
-    
     BanDocBLL banDocBLL = new BanDocBLL();
     TaiLieuBLL taiLieuBLL = new TaiLieuBLL();
     ThuThuBLL thuThuBLL = new ThuThuBLL();
@@ -39,7 +43,8 @@ public class FrameAdmin extends javax.swing.JFrame {
     DefaultTableModel taiLieuModel;
     DefaultTableModel thuThuModel;
     BanDoc banDoc = new BanDoc();
-    
+    int row = -1;
+
     public FrameAdmin() {
         initComponents();
         setLocationRelativeTo(this);
@@ -47,7 +52,7 @@ public class FrameAdmin extends javax.swing.JFrame {
         taiLieuModel = (DefaultTableModel) tblTaiLieu.getModel();
         thuThuModel = (DefaultTableModel) tblThuThu.getModel();
     }
-        
+
     private void layThongTinBanDoc() {
         banDoc.setMaBanDoc(txtMaBanDoc.getText().trim());
         banDoc.setDiaChi(txtDiaChiBanDoc.getText().trim());
@@ -55,7 +60,7 @@ public class FrameAdmin extends javax.swing.JFrame {
         banDoc.setNgaySinh(dcNgaySinhBanDoc.getDate());
         banDoc.setTenBanDoc(txtTenBanDoc.getText().trim());
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -85,7 +90,7 @@ public class FrameAdmin extends javax.swing.JFrame {
         btnXoaBanDoc = new javax.swing.JButton();
         btnDatLaiBanDoc = new javax.swing.JButton();
         btnDatLaiMatKhauBanDoc = new javax.swing.JButton();
-        txtTimKiem = new javax.swing.JTextField();
+        txtTimKiemBanDoc = new javax.swing.JTextField();
         btnTimKiemBanDoc = new javax.swing.JButton();
         dcNgaySinhBanDoc = new com.toedter.calendar.JDateChooser();
         PanelQLTaiLieu = new javax.swing.JPanel();
@@ -155,6 +160,11 @@ public class FrameAdmin extends javax.swing.JFrame {
                 "Mã bạn đọc", "Tên bạn đọc", "Ngày sinh", "Địa chỉ", "Lớp"
             }
         ));
+        tblBanDoc.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblBanDocMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblBanDoc);
 
         btnXemTatCaBanDoc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8-select-all-48.png"))); // NOI18N
@@ -175,21 +185,46 @@ public class FrameAdmin extends javax.swing.JFrame {
 
         btnSuaBanDoc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8-wrench-48.png"))); // NOI18N
         btnSuaBanDoc.setText("Sửa");
+        btnSuaBanDoc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSuaBanDocActionPerformed(evt);
+            }
+        });
 
         btnXoaBanDoc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8-delete-48.png"))); // NOI18N
         btnXoaBanDoc.setText("Xóa");
         btnXoaBanDoc.setName("Xóa"); // NOI18N
+        btnXoaBanDoc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoaBanDocActionPerformed(evt);
+            }
+        });
 
         btnDatLaiBanDoc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8-synchronize-48.png"))); // NOI18N
         btnDatLaiBanDoc.setText("Đặt lại");
+        btnDatLaiBanDoc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDatLaiBanDocActionPerformed(evt);
+            }
+        });
 
         btnDatLaiMatKhauBanDoc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8-reset-48.png"))); // NOI18N
         btnDatLaiMatKhauBanDoc.setText("Đặt lại mật khẩu");
+        btnDatLaiMatKhauBanDoc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDatLaiMatKhauBanDocActionPerformed(evt);
+            }
+        });
 
-        txtTimKiem.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        txtTimKiemBanDoc.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
 
         btnTimKiemBanDoc.setText("Tìm kiếm");
         btnTimKiemBanDoc.setNextFocusableComponent(txtMaBanDoc);
+        btnTimKiemBanDoc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTimKiemBanDocActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout PannelQLBanDocLayout = new javax.swing.GroupLayout(PannelQLBanDoc);
         PannelQLBanDoc.setLayout(PannelQLBanDocLayout);
@@ -205,7 +240,7 @@ public class FrameAdmin extends javax.swing.JFrame {
                         .addGap(17, 17, 17)
                         .addGroup(PannelQLBanDocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(PannelQLBanDocLayout.createSequentialGroup()
-                                .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtTimKiemBanDoc, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnTimKiemBanDoc))
                             .addGroup(PannelQLBanDocLayout.createSequentialGroup()
@@ -254,7 +289,7 @@ public class FrameAdmin extends javax.swing.JFrame {
                 .addGroup(PannelQLBanDocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(PannelQLBanDocLayout.createSequentialGroup()
                         .addGroup(PannelQLBanDocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtTimKiemBanDoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnTimKiemBanDoc))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(PannelQLBanDocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -630,15 +665,122 @@ public class FrameAdmin extends javax.swing.JFrame {
         // TODO add your handling code here:
         banDocModel.setRowCount(0);
         banDocModel = banDocBLL.xemTatCaBanDoc(tblBanDoc);
+        if (banDocModel.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Không có bạn đọc nào");
+        }
     }//GEN-LAST:event_btnXemTatCaBanDocActionPerformed
 
     private void btnThemBanDocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemBanDocActionPerformed
         // TODO add your handling code here:
         layThongTinBanDoc();
-        banDocBLL.themBanDoc(banDoc);
-        banDocModel.setRowCount(0);
-        banDocModel = banDocBLL.xemTatCaBanDoc(tblBanDoc);
+        try {
+            if (banDoc.getMaBanDoc().equals("")) {
+                JOptionPane.showMessageDialog(null, "Mã bạn đọc không được trống", "Thông báo", JOptionPane.OK_OPTION);
+            } else if (banDoc.getTenBanDoc().equals("")) {
+                JOptionPane.showMessageDialog(null, "Tên bạn đọc không được trống", "Thông báo", JOptionPane.OK_OPTION);
+            } else if (banDoc.getNgaySinh() == null) {
+                JOptionPane.showMessageDialog(null, "Ngày sinh bạn đọc không được trống", "Thông báo", JOptionPane.OK_OPTION);
+            } else {
+                if (banDocBLL.themBanDoc(banDoc)) {
+                    JOptionPane.showMessageDialog(null, "Thêm thành công");
+                    btnXemTatCaBanDocActionPerformed(evt);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Trùng mã bạn đọc");
+                    JOptionPane.showMessageDialog(null, "Thêm không thành công");
+                }
+            }
+        } catch (HeadlessException e) {
+            JOptionPane.showMessageDialog(null, e.toString());
+        }
+
     }//GEN-LAST:event_btnThemBanDocActionPerformed
+
+    private void btnDatLaiBanDocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDatLaiBanDocActionPerformed
+        // TODO add your handling code here:
+        txtMaBanDoc.setText("");
+        txtTenBanDoc.setText("");
+        txtDiaChiBanDoc.setText("");
+        txtLop.setText("");
+        dcNgaySinhBanDoc.setDate(null);
+    }//GEN-LAST:event_btnDatLaiBanDocActionPerformed
+
+    private void btnXoaBanDocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaBanDocActionPerformed
+        // TODO add your handling code here:
+        int i = JOptionPane.showConfirmDialog(null, "Bạn có chắc xóa bạn đọc: " + txtMaBanDoc.getText(), "Thông báo", JOptionPane.YES_NO_OPTION);
+        if (i == 0) {
+            if (banDocBLL.xoaBanDoc(tblBanDoc.getValueAt(row, 0).toString())) {
+                JOptionPane.showMessageDialog(null, "Xóa thành công");
+                btnXemTatCaBanDocActionPerformed(evt);
+            } else {
+                JOptionPane.showMessageDialog(null, "Xóa không thành công");
+            }
+        }
+    }//GEN-LAST:event_btnXoaBanDocActionPerformed
+
+    private void btnDatLaiMatKhauBanDocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDatLaiMatKhauBanDocActionPerformed
+        // TODO add your handling code here:
+        layThongTinBanDoc();
+        try {
+            int i = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn đặt lại?", "Thông báo", JOptionPane.YES_NO_OPTION);
+            if (i == 0) {
+                if (banDocBLL.datLaiMatKhau(banDoc)) {
+                    JOptionPane.showMessageDialog(null, "Đặt lại thành công");
+                    btnXemTatCaBanDocActionPerformed(evt);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Đặt lại không thành công");
+                }
+            }
+        } catch (HeadlessException e) {
+            JOptionPane.showMessageDialog(null, e.toString());
+        }
+    }//GEN-LAST:event_btnDatLaiMatKhauBanDocActionPerformed
+
+    private void tblBanDocMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblBanDocMouseClicked
+        // TODO add your handling code here:
+        row = tblBanDoc.getSelectedRow();
+        txtMaBanDoc.setText(banDocModel.getValueAt(row, 0).toString());
+        txtTenBanDoc.setText(banDocModel.getValueAt(row, 1).toString());
+        txtDiaChiBanDoc.setText(banDocModel.getValueAt(row, 3).toString());
+        txtLop.setText(banDocModel.getValueAt(row, 4).toString());
+        try {
+            dcNgaySinhBanDoc.setDate(new SimpleDateFormat("yyyy-MM-dd").parse(banDocModel.getValueAt(row, 2).toString()));
+        } catch (ParseException ex) {
+            Logger.getLogger(FrameAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_tblBanDocMouseClicked
+
+    private void btnSuaBanDocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaBanDocActionPerformed
+        // TODO add your handling code here:
+        layThongTinBanDoc();
+        try {
+            if (banDoc.getMaBanDoc().equals("")) {
+                JOptionPane.showMessageDialog(null, "Mã bạn đọc không được trống", "Thông báo", JOptionPane.OK_OPTION);
+            } else if (banDoc.getTenBanDoc().equals("")) {
+                JOptionPane.showMessageDialog(null, "Tên bạn đọc không được trống", "Thông báo", JOptionPane.OK_OPTION);
+            } else if (banDoc.getNgaySinh() == null) {
+                JOptionPane.showMessageDialog(null, "Ngày sinh bạn đọc không được trống", "Thông báo", JOptionPane.OK_OPTION);
+            } else {
+                int i = JOptionPane.showConfirmDialog(null, "Bạn có muốn sửa", "Thông báo", JOptionPane.YES_NO_OPTION);
+                if (i == 0) {
+                    if (banDocBLL.suaBanDoc(banDoc)) {
+                        JOptionPane.showMessageDialog(null, "Sửa thành công");
+                        btnXemTatCaBanDocActionPerformed(evt);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Sửa không thành công");
+                    }
+                }
+
+            }
+        } catch (HeadlessException e) {
+            JOptionPane.showMessageDialog(null, e.toString());
+        }
+    }//GEN-LAST:event_btnSuaBanDocActionPerformed
+
+    private void btnTimKiemBanDocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemBanDocActionPerformed
+        // TODO add your handling code here:
+        banDocModel.setRowCount(0);
+        tblBanDoc.setModel(banDocBLL.timKiemBanDoc(tblBanDoc, txtTimKiemBanDoc.getText().trim()));
+    }//GEN-LAST:event_btnTimKiemBanDocActionPerformed
 
     /**
      * @param args the command line arguments
@@ -646,9 +788,9 @@ public class FrameAdmin extends javax.swing.JFrame {
     public static void main(String args[]) {
         try {
             /* Set the Nimbus look and feel */
-            
+
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            
+
             /* Create and display the form */
             java.awt.EventQueue.invokeLater(new Runnable() {
                 public void run() {
@@ -724,7 +866,7 @@ public class FrameAdmin extends javax.swing.JFrame {
     private javax.swing.JTextField txtTenBanDoc;
     private javax.swing.JTextField txtTenTaiLieu;
     private javax.swing.JTextField txtTenThuThu;
-    private javax.swing.JTextField txtTimKiem;
+    private javax.swing.JTextField txtTimKiemBanDoc;
     private javax.swing.JTextField txtTimKiemTaiLieu;
     private javax.swing.JTextField txtTimKiemThuThu;
     // End of variables declaration//GEN-END:variables
