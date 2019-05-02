@@ -5,31 +5,17 @@
  */
 package GUI;
 
-import BLL.AdminBLL;
-import BLL.BanDocBLL;
-import BLL.TaiLieuBLL;
-import BLL.ThuThuBLL;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-
 /**
  *
  * @author DELL
  */
 public class FrameMuonTra extends javax.swing.JFrame {
- 
-    BanDocBLL banDocBLL = new BanDocBLL();
-    TaiLieuBLL taiLieuBLL = new TaiLieuBLL();
-    ThuThuBLL thuThuBLL = new ThuThuBLL();
-    
+
     /**
      * Creates new form FrameMuonTra
      */
     public FrameMuonTra() {
-        initComponents(); 
-        setLocationRelativeTo(this);
+        initComponents();
     }
 
     /**
