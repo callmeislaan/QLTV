@@ -9,15 +9,53 @@ package GUI;
  *
  * @author langt
  */
+import BLL.BanDocBLL;
+import BLL.TaiLieuBLL;
+import BLL.TaiLieuMuonBLL;
+import BLL.ThuThuBLL;
+import Class.BanDoc;
+import Class.TaiLieu;
+import Class.TaiLieuMuon;
+import Class.ThuThu;
+import DAL.DAL;
+import java.awt.HeadlessException;
+import java.sql.Connection;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.table.DefaultTableModel;
+
 public class FrameBanDoc extends javax.swing.JFrame {
 
     /**
      * Creates new form FrameBanDoc
      */
+     BanDocBLL banDocBLL = new BanDocBLL();
+    TaiLieuBLL taiLieuBLL = new TaiLieuBLL();
+    ThuThuBLL thuThuBLL = new ThuThuBLL();
+    TaiLieuMuonBLL taiLieuMuonBLL = new TaiLieuMuonBLL();
+    DefaultTableModel banDocModel;
+    DefaultTableModel taiLieuModel;
+    DefaultTableModel thuThuModel;
+    DefaultTableModel taiLieuMuonModel;
+    BanDoc banDoc = new BanDoc();
+    ThuThu thuThu = new ThuThu();
+    TaiLieu taiLieu = new TaiLieu();
+    TaiLieuMuon taiLieuMuon = new TaiLieuMuon();
+    int rowBanDoc = -1, rowThuThu = -1, rowTaiLieu = -1, rowTaiLieuMuon = -1;
+    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
     public FrameBanDoc() {
         initComponents();
+        taiLieuModel = (DefaultTableModel) tblTaiLieu.getModel();
+        thuThuModel = (DefaultTableModel) tblThuThu.getModel();
+        taiLieuMuonModel = (DefaultTableModel) tblTaiLieuMuon.getModel();
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,21 +65,351 @@ public class FrameBanDoc extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        PanelQLTaiLieuMuon = new javax.swing.JPanel();
+        txtTimKiemTaiLieuMuon = new javax.swing.JTextField();
+        btnTimKiemTaiLieuMuon = new javax.swing.JButton();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        tblTaiLieuMuon = new javax.swing.JTable();
+        jLabel32 = new javax.swing.JLabel();
+        btnXemTatCaTaiLieuMuon = new javax.swing.JButton();
+        PanelQLTaiLieu = new javax.swing.JPanel();
+        txtTimKiemTaiLieu = new javax.swing.JTextField();
+        btnTimKiemTaiLieu = new javax.swing.JButton();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        tblTaiLieu = new javax.swing.JTable();
+        jLabel26 = new javax.swing.JLabel();
+        btnXemTatCaTaiLieu = new javax.swing.JButton();
+        PanelQLThuThu = new javax.swing.JPanel();
+        txtTimKiemThuThu = new javax.swing.JTextField();
+        btnTimKiemThuThu = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tblThuThu = new javax.swing.JTable();
+        jLabel6 = new javax.swing.JLabel();
+        btnXemTatCaThuThu = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        txtTimKiemTaiLieuMuon.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+
+        btnTimKiemTaiLieuMuon.setText("Tìm kiếm");
+        btnTimKiemTaiLieuMuon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTimKiemTaiLieuMuonActionPerformed(evt);
+            }
+        });
+
+        tblTaiLieuMuon.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Mã mượn", "Mã bạn đọc", "Mã tài liệu", "Mã thủ thư", "Số lượng", "Ngày mượn", "Ngày trả"
+            }
+        ));
+        tblTaiLieuMuon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblTaiLieuMuonMouseClicked(evt);
+            }
+        });
+        jScrollPane5.setViewportView(tblTaiLieuMuon);
+
+        jLabel32.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel32.setText("Quản lý Tài liệu mượn");
+
+        btnXemTatCaTaiLieuMuon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8-select-all-48.png"))); // NOI18N
+        btnXemTatCaTaiLieuMuon.setText("Xem tất cả");
+        btnXemTatCaTaiLieuMuon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXemTatCaTaiLieuMuonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout PanelQLTaiLieuMuonLayout = new javax.swing.GroupLayout(PanelQLTaiLieuMuon);
+        PanelQLTaiLieuMuon.setLayout(PanelQLTaiLieuMuonLayout);
+        PanelQLTaiLieuMuonLayout.setHorizontalGroup(
+            PanelQLTaiLieuMuonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PanelQLTaiLieuMuonLayout.createSequentialGroup()
+                .addGap(375, 375, 375)
+                .addComponent(jLabel32)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(PanelQLTaiLieuMuonLayout.createSequentialGroup()
+                .addGroup(PanelQLTaiLieuMuonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PanelQLTaiLieuMuonLayout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(txtTimKiemTaiLieuMuon, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnTimKiemTaiLieuMuon))
+                    .addGroup(PanelQLTaiLieuMuonLayout.createSequentialGroup()
+                        .addGap(64, 64, 64)
+                        .addComponent(btnXemTatCaTaiLieuMuon, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(10, 10, 10)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 565, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        PanelQLTaiLieuMuonLayout.setVerticalGroup(
+            PanelQLTaiLieuMuonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PanelQLTaiLieuMuonLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel32)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(PanelQLTaiLieuMuonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PanelQLTaiLieuMuonLayout.createSequentialGroup()
+                        .addGroup(PanelQLTaiLieuMuonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtTimKiemTaiLieuMuon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnTimKiemTaiLieuMuon))
+                        .addGap(29, 29, 29)
+                        .addComponent(btnXemTatCaTaiLieuMuon)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("Quản lý tài liệu mượn", PanelQLTaiLieuMuon);
+
+        txtTimKiemTaiLieu.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+
+        btnTimKiemTaiLieu.setText("Tìm kiếm");
+        btnTimKiemTaiLieu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTimKiemTaiLieuActionPerformed(evt);
+            }
+        });
+
+        tblTaiLieu.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Mã tài liệu", "Tên tài liệu", "Số lượng", "Nhà xuất bản", "Giá"
+            }
+        ));
+        tblTaiLieu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblTaiLieuMouseClicked(evt);
+            }
+        });
+        jScrollPane4.setViewportView(tblTaiLieu);
+
+        jLabel26.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel26.setText("Quản lý Tài liệu");
+
+        btnXemTatCaTaiLieu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8-select-all-48.png"))); // NOI18N
+        btnXemTatCaTaiLieu.setText("Xem tất cả");
+        btnXemTatCaTaiLieu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXemTatCaTaiLieuActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout PanelQLTaiLieuLayout = new javax.swing.GroupLayout(PanelQLTaiLieu);
+        PanelQLTaiLieu.setLayout(PanelQLTaiLieuLayout);
+        PanelQLTaiLieuLayout.setHorizontalGroup(
+            PanelQLTaiLieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PanelQLTaiLieuLayout.createSequentialGroup()
+                .addGap(375, 375, 375)
+                .addComponent(jLabel26)
+                .addGap(0, 453, Short.MAX_VALUE))
+            .addGroup(PanelQLTaiLieuLayout.createSequentialGroup()
+                .addGroup(PanelQLTaiLieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PanelQLTaiLieuLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(txtTimKiemTaiLieu, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnTimKiemTaiLieu))
+                    .addGroup(PanelQLTaiLieuLayout.createSequentialGroup()
+                        .addGap(77, 77, 77)
+                        .addComponent(btnXemTatCaTaiLieu, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(7, 7, 7)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 570, Short.MAX_VALUE))
+        );
+        PanelQLTaiLieuLayout.setVerticalGroup(
+            PanelQLTaiLieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PanelQLTaiLieuLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel26)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(PanelQLTaiLieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PanelQLTaiLieuLayout.createSequentialGroup()
+                        .addGroup(PanelQLTaiLieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtTimKiemTaiLieu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnTimKiemTaiLieu))
+                        .addGap(40, 40, 40)
+                        .addComponent(btnXemTatCaTaiLieu)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("Quản lý tài liệu", PanelQLTaiLieu);
+
+        txtTimKiemThuThu.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+
+        btnTimKiemThuThu.setText("Tìm kiếm");
+        btnTimKiemThuThu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTimKiemThuThuActionPerformed(evt);
+            }
+        });
+
+        tblThuThu.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Mã thủ thư", "Tên thủ thư", "Ngày sinh", "Địa chỉ", "Số điện thoại"
+            }
+        ));
+        tblThuThu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblThuThuMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(tblThuThu);
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel6.setText("Quản lý thủ thư");
+
+        btnXemTatCaThuThu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8-select-all-48.png"))); // NOI18N
+        btnXemTatCaThuThu.setText("Xem tất cả");
+        btnXemTatCaThuThu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXemTatCaThuThuActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout PanelQLThuThuLayout = new javax.swing.GroupLayout(PanelQLThuThu);
+        PanelQLThuThu.setLayout(PanelQLThuThuLayout);
+        PanelQLThuThuLayout.setHorizontalGroup(
+            PanelQLThuThuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PanelQLThuThuLayout.createSequentialGroup()
+                .addGap(375, 375, 375)
+                .addComponent(jLabel6)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(PanelQLThuThuLayout.createSequentialGroup()
+                .addGroup(PanelQLThuThuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PanelQLThuThuLayout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(txtTimKiemThuThu, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnTimKiemThuThu))
+                    .addGroup(PanelQLThuThuLayout.createSequentialGroup()
+                        .addGap(108, 108, 108)
+                        .addComponent(btnXemTatCaThuThu)))
+                .addGap(11, 11, 11)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 567, Short.MAX_VALUE))
+        );
+        PanelQLThuThuLayout.setVerticalGroup(
+            PanelQLThuThuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PanelQLThuThuLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(PanelQLThuThuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PanelQLThuThuLayout.createSequentialGroup()
+                        .addGroup(PanelQLThuThuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtTimKiemThuThu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnTimKiemThuThu))
+                        .addGap(34, 34, 34)
+                        .addComponent(btnXemTatCaThuThu)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("Quản lý thủ thư", PanelQLThuThu);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane1))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane1))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnXemTatCaTaiLieuMuonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXemTatCaTaiLieuMuonActionPerformed
+        // TODO add your handling code here:
+        taiLieuMuonModel.setRowCount(0);
+        taiLieuMuonModel = taiLieuMuonBLL.xemTatCaTaiLieuMuon(tblTaiLieuMuon);
+        if (taiLieuMuonModel.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Không có tài liệu mượn nào");
+        }
+    }//GEN-LAST:event_btnXemTatCaTaiLieuMuonActionPerformed
+
+    private void tblTaiLieuMuonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTaiLieuMuonMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tblTaiLieuMuonMouseClicked
+
+    private void btnTimKiemTaiLieuMuonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemTaiLieuMuonActionPerformed
+        // TODO add your handling code here:
+        taiLieuMuonModel.setRowCount(0);
+        taiLieuMuonModel = taiLieuMuonBLL.timKiemTaiLieuMuon(tblTaiLieuMuon, txtTimKiemTaiLieuMuon.getText().trim());
+        if (taiLieuMuonModel.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Không có tài liệu mượn nào");
+        }
+    }//GEN-LAST:event_btnTimKiemTaiLieuMuonActionPerformed
+
+    private void layThongTinThuThu() {
+    
+    }
+    
+    private void btnTimKiemThuThuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemThuThuActionPerformed
+        // TODO add your handling code here:
+        thuThuModel.setRowCount(0);
+        thuThuModel = thuThuBLL.timKiemThuThu(tblThuThu, txtTimKiemThuThu.getText().trim());
+        if (thuThuModel.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Không có thủ thư nào");
+        }
+    }//GEN-LAST:event_btnTimKiemThuThuActionPerformed
+
+    private void tblThuThuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblThuThuMouseClicked
+        // TODO add your handling code here:
+        rowThuThu = tblThuThu.getSelectedRow();
+   
+    }//GEN-LAST:event_tblThuThuMouseClicked
+
+    private void btnXemTatCaThuThuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXemTatCaThuThuActionPerformed
+        // TODO add your handling code here:
+        thuThuModel = thuThuBLL.xemTatCaThuThu(tblThuThu);
+        if (thuThuModel.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Không có thủ thư nào");
+        }
+
+        
+    }//GEN-LAST:event_btnXemTatCaThuThuActionPerformed
+
+    private void tblTaiLieuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTaiLieuMouseClicked
+        // TODO add your handling code here:
+  
+    }//GEN-LAST:event_tblTaiLieuMouseClicked
+
+    private void btnXemTatCaTaiLieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXemTatCaTaiLieuActionPerformed
+        // TODO add your handling code here:
+        taiLieuModel.setRowCount(0);
+        taiLieuModel = taiLieuBLL.xemTatCaTaiLieu(tblTaiLieu);
+        if (taiLieuModel.getRowCount() < 0) {
+            JOptionPane.showMessageDialog(null, "Không có tài liệu nào");
+        }
+    }//GEN-LAST:event_btnXemTatCaTaiLieuActionPerformed
+
+    private void btnTimKiemTaiLieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemTaiLieuActionPerformed
+        // TODO add your handling code here:
+        taiLieuModel.setRowCount(0);
+        taiLieuModel=taiLieuBLL.timKiemTaiLieu(tblTaiLieu,txtTimKiemTaiLieu.getText().trim());
+        if (taiLieuModel.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Không có tài liệu mượn nào");
+        }
+    }//GEN-LAST:event_btnTimKiemTaiLieuActionPerformed
 
     /**
      * @param args the command line arguments
@@ -79,5 +447,27 @@ public class FrameBanDoc extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel PanelQLTaiLieu;
+    private javax.swing.JPanel PanelQLTaiLieuMuon;
+    private javax.swing.JPanel PanelQLThuThu;
+    private javax.swing.JButton btnTimKiemTaiLieu;
+    private javax.swing.JButton btnTimKiemTaiLieuMuon;
+    private javax.swing.JButton btnTimKiemThuThu;
+    private javax.swing.JButton btnXemTatCaTaiLieu;
+    private javax.swing.JButton btnXemTatCaTaiLieuMuon;
+    private javax.swing.JButton btnXemTatCaThuThu;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTable tblTaiLieu;
+    private javax.swing.JTable tblTaiLieuMuon;
+    private javax.swing.JTable tblThuThu;
+    private javax.swing.JTextField txtTimKiemTaiLieu;
+    private javax.swing.JTextField txtTimKiemTaiLieuMuon;
+    private javax.swing.JTextField txtTimKiemThuThu;
     // End of variables declaration//GEN-END:variables
 }

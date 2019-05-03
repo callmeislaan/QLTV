@@ -45,7 +45,6 @@ public class BanDocBLL {
     public DefaultTableModel xemTatCaBanDoc(JTable tbl) {
         DefaultTableModel model = null;
         try {
-            
             String sql = "select * from BanDoc";
             conn = dal.getConnection();
             ResultSet rs = dal.getTable(conn, sql);

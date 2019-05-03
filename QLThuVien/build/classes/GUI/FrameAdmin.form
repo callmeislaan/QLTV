@@ -1106,7 +1106,6 @@
                                   <Component id="txtTimKiemTaiLieu" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="btnTimKiemTaiLieu" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
@@ -1193,6 +1192,9 @@
                   <ComponentRef name="txtMaTaiLieu"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTimKiemTaiLieuActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel23">
               <Properties>

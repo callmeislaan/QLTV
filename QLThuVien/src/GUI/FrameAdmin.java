@@ -807,6 +807,11 @@ public class FrameAdmin extends javax.swing.JFrame {
 
         btnTimKiemTaiLieu.setText("Tìm kiếm");
         btnTimKiemTaiLieu.setNextFocusableComponent(txtMaTaiLieu);
+        btnTimKiemTaiLieu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTimKiemTaiLieuActionPerformed(evt);
+            }
+        });
 
         jLabel23.setText("Mã tài liệu");
 
@@ -926,7 +931,6 @@ public class FrameAdmin extends javax.swing.JFrame {
                         .addGroup(PanelQLTaiLieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtTimKiemTaiLieu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnTimKiemTaiLieu))
-                        .addGap(18, 18, 18)
                         .addGroup(PanelQLTaiLieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(PanelQLTaiLieuLayout.createSequentialGroup()
                                 .addGap(41, 41, 41)
@@ -1125,7 +1129,9 @@ public class FrameAdmin extends javax.swing.JFrame {
         // TODO add your handling code here:
         banDocModel.setRowCount(0);
         banDocModel = banDocBLL.timKiemBanDoc(tblBanDoc, txtTimKiemBanDoc.getText().trim());
-
+        if (banDocModel.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Không có tài liệu mượn nào");
+        }
     }//GEN-LAST:event_btnTimKiemBanDocActionPerformed
 
     private void btnXemTatCaThuThuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXemTatCaThuThuActionPerformed
@@ -1261,6 +1267,7 @@ public class FrameAdmin extends javax.swing.JFrame {
         if (taiLieuModel.getRowCount() < 0) {
             JOptionPane.showMessageDialog(null, "Không có tài liệu nào");
         }
+
     }//GEN-LAST:event_btnXemTatCaTaiLieuActionPerformed
 
     private void btnDatLaiTaiLieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDatLaiTaiLieuActionPerformed
@@ -1432,7 +1439,17 @@ public class FrameAdmin extends javax.swing.JFrame {
         if (taiLieuMuonModel.getRowCount() == 0) {
             JOptionPane.showMessageDialog(null, "Không có tài liệu mượn nào");
         }
+
     }//GEN-LAST:event_btnTimKiemTaiLieuMuonActionPerformed
+
+    private void btnTimKiemTaiLieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemTaiLieuActionPerformed
+        // TODO add your handling code here:
+        taiLieuModel.setRowCount(0);
+        taiLieuModel=taiLieuBLL.timKiemTaiLieu(tblTaiLieu,txtTimKiemTaiLieu.getText().trim());
+        if (taiLieuModel.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Không có tài liệu mượn nào");
+        }
+    }//GEN-LAST:event_btnTimKiemTaiLieuActionPerformed
 
     /**
      * @param args the command line arguments

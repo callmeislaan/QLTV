@@ -3,21 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/Java/BaiTapLonQuanLyThuVien/QLTV/QLThuVien/src/Class/Admin.java</file>
-            <file>file:/E:/Java/BaiTapLonQuanLyThuVien/QLTV/QLThuVien/src/Class/ThuThu.java</file>
-            <file>file:/E:/Java/BaiTapLonQuanLyThuVien/QLTV/QLThuVien/src/BLL/TaiLieuBLL.java</file>
-            <file>file:/E:/Java/BaiTapLonQuanLyThuVien/QLTV/QLThuVien/src/DAL/DAL.java</file>
-            <file>file:/E:/Java/BaiTapLonQuanLyThuVien/QLTV/QLThuVien/src/GUI/FrameThuThu.java</file>
-            <file>file:/E:/Java/BaiTapLonQuanLyThuVien/QLTV/QLThuVien/src/GUI/FrameBanDoc.java</file>
-            <file>file:/E:/Java/BaiTapLonQuanLyThuVien/QLTV/QLThuVien/src/BLL/ThuThuBLL.java</file>
-            <file>file:/E:/Java/BaiTapLonQuanLyThuVien/QLTV/QLThuVien/src/GUI/FrameMuonTra.java</file>
-            <file>file:/E:/Java/BaiTapLonQuanLyThuVien/QLTV/QLThuVien/src/BLL/TaiLieuMuonBLL.java</file>
-            <file>file:/E:/Java/BaiTapLonQuanLyThuVien/QLTV/QLThuVien/src/GUI/FrameTaiLieu.java</file>
-            <file>file:/E:/Java/BaiTapLonQuanLyThuVien/QLTV/QLThuVien/src/Class/TaiLieuMuon.java</file>
-            <file>file:/E:/Java/BaiTapLonQuanLyThuVien/QLTV/QLThuVien/src/Class/TaiLieu.java</file>
-            <file>file:/E:/Java/BaiTapLonQuanLyThuVien/QLTV/QLThuVien/src/GUI/FrameAdmin.java</file>
-            <file>file:/E:/Java/BaiTapLonQuanLyThuVien/QLTV/QLThuVien/src/BLL/BanDocBLL.java</file>
-            <file>file:/E:/Java/BaiTapLonQuanLyThuVien/QLTV/QLThuVien/src/GUI/FrameDangNhap.java</file>
+            <file>file:/F:/QuanLyTV/QLTV/QLThuVien/src/GUI/FrameThuThu.java</file>
+            <file>file:/F:/QuanLyTV/QLTV/QLThuVien/src/BLL/TaiLieuBLL.java</file>
+            <file>file:/F:/QuanLyTV/QLTV/QLThuVien/src/GUI/FrameAdmin.java</file>
+            <file>file:/F:/QuanLyTV/QLTV/QLThuVien/src/DAL/DAL.java</file>
+            <file>file:/F:/QuanLyTV/QLTV/QLThuVien/src/BLL/BanDocBLL.java</file>
+            <file>file:/F:/QuanLyTV/QLTV/QLThuVien/src/GUI/FrameDangNhap.java</file>
+            <file>file:/F:/QuanLyTV/QLTV/QLThuVien/src/GUI/FrameBanDoc.java</file>
+            <file>file:/F:/QuanLyTV/QLTV/QLThuVien/src/BLL/TaiLieuMuonBLL.java</file>
+            <file>file:/F:/QuanLyTV/QLTV/QLThuVien/src/BLL/ThuThuBLL.java</file>
         </group>
     </open-files>
 </project-private>
