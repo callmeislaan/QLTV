@@ -184,6 +184,7 @@ public class FrameAdmin extends javax.swing.JFrame {
         dcNgayTra = new com.toedter.calendar.JDateChooser();
         jLabel34 = new javax.swing.JLabel();
         txtMaMuon = new javax.swing.JTextField();
+        btnDatLaiMatKhauThuThu1 = new javax.swing.JButton();
         PanelQLTaiLieu = new javax.swing.JPanel();
         jLabel21 = new javax.swing.JLabel();
         btnDatLaiTaiLieu = new javax.swing.JButton();
@@ -205,6 +206,7 @@ public class FrameAdmin extends javax.swing.JFrame {
         txtSoLuongTaiLieu = new javax.swing.JTextField();
         txtNhaXuatBan = new javax.swing.JTextField();
         txtGia = new javax.swing.JTextField();
+        btnDatLaiMatKhauThuThu2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -679,6 +681,14 @@ public class FrameAdmin extends javax.swing.JFrame {
 
         jLabel34.setText("Mã mượn");
 
+        btnDatLaiMatKhauThuThu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8-reset-48.png"))); // NOI18N
+        btnDatLaiMatKhauThuThu1.setText("Đặt lại mật khẩu");
+        btnDatLaiMatKhauThuThu1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDatLaiMatKhauThuThu1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout PanelQLTaiLieuMuonLayout = new javax.swing.GroupLayout(PanelQLTaiLieuMuon);
         PanelQLTaiLieuMuon.setLayout(PanelQLTaiLieuMuonLayout);
         PanelQLTaiLieuMuonLayout.setHorizontalGroup(
@@ -704,7 +714,10 @@ public class FrameAdmin extends javax.swing.JFrame {
                                 .addGroup(PanelQLTaiLieuMuonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(btnThemTaiLieuMuon, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(btnXoaTaiLieuMuon, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(btnSuaTaiLieuMuon, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(PanelQLTaiLieuMuonLayout.createSequentialGroup()
+                                .addComponent(btnSuaTaiLieuMuon, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnDatLaiMatKhauThuThu1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(PanelQLTaiLieuMuonLayout.createSequentialGroup()
                                 .addGroup(PanelQLTaiLieuMuonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel31)
@@ -782,7 +795,10 @@ public class FrameAdmin extends javax.swing.JFrame {
                             .addComponent(btnDatLaiTaiLieuMuon)
                             .addComponent(btnXoaTaiLieuMuon))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnSuaTaiLieuMuon, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(PanelQLTaiLieuMuonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnSuaTaiLieuMuon, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnDatLaiMatKhauThuThu1))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane5))
                 .addContainerGap())
         );
@@ -870,6 +886,14 @@ public class FrameAdmin extends javax.swing.JFrame {
             }
         });
 
+        btnDatLaiMatKhauThuThu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8-reset-48.png"))); // NOI18N
+        btnDatLaiMatKhauThuThu2.setText("Đặt lại mật khẩu");
+        btnDatLaiMatKhauThuThu2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDatLaiMatKhauThuThu2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout PanelQLTaiLieuLayout = new javax.swing.GroupLayout(PanelQLTaiLieu);
         PanelQLTaiLieu.setLayout(PanelQLTaiLieuLayout);
         PanelQLTaiLieuLayout.setHorizontalGroup(
@@ -885,7 +909,7 @@ public class FrameAdmin extends javax.swing.JFrame {
                         .addComponent(txtTimKiemTaiLieu, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnTimKiemTaiLieu))
-                    .addGroup(PanelQLTaiLieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PanelQLTaiLieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(PanelQLTaiLieuLayout.createSequentialGroup()
                             .addGroup(PanelQLTaiLieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel25)
@@ -900,7 +924,10 @@ public class FrameAdmin extends javax.swing.JFrame {
                                 .addComponent(txtSoLuongTaiLieu, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(txtNhaXuatBan, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(txtGia, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addComponent(btnSuaTaiLieu)
+                        .addGroup(PanelQLTaiLieuLayout.createSequentialGroup()
+                            .addComponent(btnSuaTaiLieu)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnDatLaiMatKhauThuThu2, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelQLTaiLieuLayout.createSequentialGroup()
                             .addGap(1, 1, 1)
                             .addGroup(PanelQLTaiLieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -962,7 +989,9 @@ public class FrameAdmin extends javax.swing.JFrame {
                             .addComponent(btnDatLaiTaiLieu)
                             .addComponent(btnXoaTaiLieu))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnSuaTaiLieu)
+                        .addGroup(PanelQLTaiLieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnSuaTaiLieu)
+                            .addComponent(btnDatLaiMatKhauThuThu2))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 488, Short.MAX_VALUE))
                 .addContainerGap())
@@ -1451,6 +1480,43 @@ public class FrameAdmin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnTimKiemTaiLieuActionPerformed
 
+    private void btnDatLaiMatKhauThuThu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDatLaiMatKhauThuThu1ActionPerformed
+        // TODO add your handling code here:
+         layThongTinTaiLieuMuon();
+         try {
+            int i = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn đặt lại?", "Thông báo", JOptionPane.YES_NO_OPTION);
+            if (i == 0) {
+                if (taiLieuMuonBLL.datLaiMatKhau(taiLieuMuon)) {
+                    JOptionPane.showMessageDialog(null, "Đặt lại thành công");
+                    btnXemTatCaBanDocActionPerformed(evt);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Đặt lại không thành công");
+                }
+            }
+        } catch (HeadlessException e) {
+            JOptionPane.showMessageDialog(null, e.toString());
+        }
+        
+    }//GEN-LAST:event_btnDatLaiMatKhauThuThu1ActionPerformed
+
+    private void btnDatLaiMatKhauThuThu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDatLaiMatKhauThuThu2ActionPerformed
+        // TODO add your handling code here:
+                layThongTinTaiLieu();
+         try {
+            int i = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn đặt lại?", "Thông báo", JOptionPane.YES_NO_OPTION);
+            if (i == 0) {
+                if (taiLieuBLL.datLaiMatKhau(taiLieu)) {
+                    JOptionPane.showMessageDialog(null, "Đặt lại thành công");
+                    btnXemTatCaBanDocActionPerformed(evt);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Đặt lại không thành công");
+                }
+            }
+        } catch (HeadlessException e) {
+            JOptionPane.showMessageDialog(null, e.toString());
+        }
+    }//GEN-LAST:event_btnDatLaiMatKhauThuThu2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1479,6 +1545,8 @@ public class FrameAdmin extends javax.swing.JFrame {
     private javax.swing.JButton btnDatLaiBanDoc;
     private javax.swing.JButton btnDatLaiMatKhauBanDoc;
     private javax.swing.JButton btnDatLaiMatKhauThuThu;
+    private javax.swing.JButton btnDatLaiMatKhauThuThu1;
+    private javax.swing.JButton btnDatLaiMatKhauThuThu2;
     private javax.swing.JButton btnDatLaiTaiLieu;
     private javax.swing.JButton btnDatLaiTaiLieuMuon;
     private javax.swing.JButton btnDatLaiThuThu;

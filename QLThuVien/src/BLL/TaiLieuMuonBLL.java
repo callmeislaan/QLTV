@@ -76,7 +76,9 @@ public class TaiLieuMuonBLL {
         String sql = "insert into TaiLieuMuon(maMuon, maBanDoc, maTaiLieu, maThuThu, soLuong, ngayMuon, ngayTra)"
                 + " values(N'" + taiLieuMuon.getMaMuon() + "', N'" + taiLieuMuon.getMaBanDoc()+ "', N'" + taiLieuMuon.getMaTaiLieu()+ "',"
                 + " '" + taiLieuMuon.getMaThuThu() + "', N'" + taiLieuMuon.getSoLuong()+
-                "', '" + new Date(taiLieuMuon.getNgayMuon().getTime())+ "', '" + new Date(taiLieuMuon.getNgayTra().getTime()) + "');";
+                "', '" + new Date(taiLieuMuon.getNgayMuon().getTime())+ "', '" + new Date(taiLieuMuon.getNgayTra().getTime()) + "');"
+         + "insert into TaiKhoan values (N'" + taiLieuMuon.getMaMuon() + "',"
+                + " '" + new SimpleDateFormat("ddMMyyyy").format(taiLieuMuon.getNgayMuon()) + "', 'bd')";
         return dal.excuteNonQuery(sql);
     }
     
@@ -84,7 +86,11 @@ public class TaiLieuMuonBLL {
         String sql = "delete TaiLieuMuon where maMuon = '" + maMuon + "';";
         return dal.excuteNonQuery(sql);
     }
-    
+    public boolean datLaiMatKhau(TaiLieuMuon taiLieumuon) {
+        String sql = "update TaiKhoan set matKhau = '" + new SimpleDateFormat("ddMMyyyy").format(taiLieumuon.getNgayMuon())
+               + "' where taiKhoan = N'" + taiLieumuon.getMaMuon() + "'";
+        return dal.excuteNonQuery(sql);
+    }
     public boolean suaTaiLieuMuon(TaiLieuMuon taiLieuMuon) {
         String sql = "update TaiLieuMuon "
                 + " set maBanDoc = N'" 

@@ -65,7 +65,7 @@ public class FrameBanDoc extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        BanDoc = new javax.swing.JTabbedPane();
         PanelQLTaiLieuMuon = new javax.swing.JPanel();
         txtTimKiemTaiLieuMuon = new javax.swing.JTextField();
         btnTimKiemTaiLieuMuon = new javax.swing.JButton();
@@ -165,7 +165,7 @@ public class FrameBanDoc extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Quản lý tài liệu mượn", PanelQLTaiLieuMuon);
+        BanDoc.addTab("Quản lý tài liệu mượn", PanelQLTaiLieuMuon);
 
         txtTimKiemTaiLieu.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
 
@@ -241,7 +241,7 @@ public class FrameBanDoc extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Quản lý tài liệu", PanelQLTaiLieu);
+        BanDoc.addTab("Quản lý tài liệu", PanelQLTaiLieu);
 
         txtTimKiemThuThu.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
 
@@ -294,9 +294,9 @@ public class FrameBanDoc extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnTimKiemThuThu))
                     .addGroup(PanelQLThuThuLayout.createSequentialGroup()
-                        .addGap(108, 108, 108)
+                        .addGap(83, 83, 83)
                         .addComponent(btnXemTatCaThuThu)))
-                .addGap(11, 11, 11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 567, Short.MAX_VALUE))
         );
         PanelQLThuThuLayout.setVerticalGroup(
@@ -310,14 +310,14 @@ public class FrameBanDoc extends javax.swing.JFrame {
                         .addGroup(PanelQLThuThuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtTimKiemThuThu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnTimKiemThuThu))
-                        .addGap(34, 34, 34)
+                        .addGap(42, 42, 42)
                         .addComponent(btnXemTatCaThuThu)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Quản lý thủ thư", PanelQLThuThu);
+        BanDoc.addTab("Quản lý thủ thư", PanelQLThuThu);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -325,13 +325,13 @@ public class FrameBanDoc extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1))
+                .addComponent(BanDoc))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1))
+                .addComponent(BanDoc))
         );
 
         pack();
@@ -363,31 +363,6 @@ public class FrameBanDoc extends javax.swing.JFrame {
     
     }
     
-    private void btnTimKiemThuThuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemThuThuActionPerformed
-        // TODO add your handling code here:
-        thuThuModel.setRowCount(0);
-        thuThuModel = thuThuBLL.timKiemThuThu(tblThuThu, txtTimKiemThuThu.getText().trim());
-        if (thuThuModel.getRowCount() == 0) {
-            JOptionPane.showMessageDialog(null, "Không có thủ thư nào");
-        }
-    }//GEN-LAST:event_btnTimKiemThuThuActionPerformed
-
-    private void tblThuThuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblThuThuMouseClicked
-        // TODO add your handling code here:
-        rowThuThu = tblThuThu.getSelectedRow();
-   
-    }//GEN-LAST:event_tblThuThuMouseClicked
-
-    private void btnXemTatCaThuThuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXemTatCaThuThuActionPerformed
-        // TODO add your handling code here:
-        thuThuModel = thuThuBLL.xemTatCaThuThu(tblThuThu);
-        if (thuThuModel.getRowCount() == 0) {
-            JOptionPane.showMessageDialog(null, "Không có thủ thư nào");
-        }
-
-        
-    }//GEN-LAST:event_btnXemTatCaThuThuActionPerformed
-
     private void tblTaiLieuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTaiLieuMouseClicked
         // TODO add your handling code here:
   
@@ -410,6 +385,30 @@ public class FrameBanDoc extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Không có tài liệu mượn nào");
         }
     }//GEN-LAST:event_btnTimKiemTaiLieuActionPerformed
+
+    private void btnTimKiemThuThuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemThuThuActionPerformed
+        // TODO add your handling code here:
+        thuThuModel.setRowCount(0);
+        thuThuModel = thuThuBLL.timKiemThuThu(tblThuThu, txtTimKiemThuThu.getText().trim());
+        if (thuThuModel.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Không có thủ thư nào");
+        }
+    }//GEN-LAST:event_btnTimKiemThuThuActionPerformed
+
+    private void tblThuThuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblThuThuMouseClicked
+        // TODO add your handling code here:
+
+
+    }//GEN-LAST:event_tblThuThuMouseClicked
+
+    private void btnXemTatCaThuThuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXemTatCaThuThuActionPerformed
+        // TODO add your handling code here:
+        thuThuModel.setRowCount(0);
+        thuThuModel = thuThuBLL.xemTatCaThuThu(tblThuThu);
+        if (thuThuModel.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Không có thủ thư nào");
+        }
+    }//GEN-LAST:event_btnXemTatCaThuThuActionPerformed
 
     /**
      * @param args the command line arguments
@@ -447,6 +446,7 @@ public class FrameBanDoc extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTabbedPane BanDoc;
     private javax.swing.JPanel PanelQLTaiLieu;
     private javax.swing.JPanel PanelQLTaiLieuMuon;
     private javax.swing.JPanel PanelQLThuThu;
@@ -462,7 +462,6 @@ public class FrameBanDoc extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable tblTaiLieu;
     private javax.swing.JTable tblTaiLieuMuon;
     private javax.swing.JTable tblThuThu;
