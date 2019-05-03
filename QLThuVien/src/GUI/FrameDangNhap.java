@@ -5,6 +5,7 @@
  */
 package GUI;
 
+import BLL.DangNhapBLL;
 import java.awt.event.KeyEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,13 +22,33 @@ public class FrameDangNhap extends javax.swing.JFrame {
     /**
      * Creates new form FrameDangNhap
      */
+    
+    DangNhapBLL dangNhapBLL = new DangNhapBLL();
+    
     public FrameDangNhap() {
         initComponents();
         setLocationRelativeTo(this);
     }
     
     private void DangNhap() {
-        JOptionPane.showMessageDialog(rootPane, "Dang nhap");
+        int i = dangNhapBLL.dangNhap(txtTaiKhoan.getText().trim(), pswMatKhau.getText().trim());
+        if (i == -1) {
+            JOptionPane.showMessageDialog(rootPane, "Tên tài khoản hoặc mật khẩu không đúng\n"
+                    + "Đăng nhập không thành công");
+        } else if (i == 1) {
+            JOptionPane.showMessageDialog(rootPane, "Đăng nhập thành công", "Thông báo", JOptionPane.OK_OPTION);
+            new FrameBanDoc().setVisible(true);
+            this.dispose();
+        } else if (i == 2) {
+            JOptionPane.showMessageDialog(rootPane, "Đăng nhập thành công", "Thông báo", JOptionPane.OK_OPTION);
+            new FrameThuThu().setVisible(true);
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Đăng nhập thành công", "Thông báo", JOptionPane.OK_OPTION);
+            new FrameAdmin().setVisible(true);
+            this.dispose();
+        }
+        
     }
 
     /**

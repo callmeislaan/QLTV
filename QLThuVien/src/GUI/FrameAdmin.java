@@ -926,7 +926,6 @@ public class FrameAdmin extends javax.swing.JFrame {
                         .addGroup(PanelQLTaiLieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtTimKiemTaiLieu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnTimKiemTaiLieu))
-                        .addGap(18, 18, 18)
                         .addGroup(PanelQLTaiLieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(PanelQLTaiLieuLayout.createSequentialGroup()
                                 .addGap(41, 41, 41)
@@ -1434,25 +1433,25 @@ public class FrameAdmin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnTimKiemTaiLieuMuonActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        try {
-            /* Set the Nimbus look and feel */
-
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-
-            /* Create and display the form */
-            java.awt.EventQueue.invokeLater(new Runnable() {
-                public void run() {
-                    new FrameAdmin().setVisible(true);
-                }
-            });
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
-            Logger.getLogger(FrameAdmin.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+//    /**
+//     * @param args the command line arguments
+//     */
+//    public static void main(String args[]) {
+//        try {
+//            /* Set the Nimbus look and feel */
+//
+//            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+//
+//            /* Create and display the form */
+//            java.awt.EventQueue.invokeLater(new Runnable() {
+//                public void run() {
+//                    new FrameAdmin().setVisible(true);
+//                }
+//            });
+//        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+//            Logger.getLogger(FrameAdmin.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PanelQLTaiLieu;
