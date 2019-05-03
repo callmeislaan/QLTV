@@ -101,4 +101,5 @@ public class ThuThuBLL {
                 + "', soDT = N'" + thuThu.getSoDT() + "' where maThuThu = '" + thuThu.getMaThuThu() + "';";
         return dal.excuteNonQuery(sql);
     }
+    
 }

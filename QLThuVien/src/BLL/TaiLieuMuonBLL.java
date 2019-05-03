@@ -15,7 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-
+import java.text.SimpleDateFormat;
 /**
  *
  * @author langt
@@ -55,7 +55,7 @@ public class TaiLieuMuonBLL {
         return model;
     }
     
-    public DefaultTableModel timKiemTaiLieuMuon(JTable tbl, String timKiem) {
+    public  DefaultTableModel timKiemTaiLieuMuon(JTable tbl, String timKiem) {
         DefaultTableModel model = null;
         try {
             

@@ -807,6 +807,11 @@ public class FrameAdmin extends javax.swing.JFrame {
 
         btnTimKiemTaiLieu.setText("Tìm kiếm");
         btnTimKiemTaiLieu.setNextFocusableComponent(txtMaTaiLieu);
+        btnTimKiemTaiLieu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTimKiemTaiLieuActionPerformed(evt);
+            }
+        });
 
         jLabel23.setText("Mã tài liệu");
 
@@ -1124,7 +1129,9 @@ public class FrameAdmin extends javax.swing.JFrame {
         // TODO add your handling code here:
         banDocModel.setRowCount(0);
         banDocModel = banDocBLL.timKiemBanDoc(tblBanDoc, txtTimKiemBanDoc.getText().trim());
-
+        if (banDocModel.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Không có tài liệu mượn nào");
+        }
     }//GEN-LAST:event_btnTimKiemBanDocActionPerformed
 
     private void btnXemTatCaThuThuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXemTatCaThuThuActionPerformed
@@ -1260,6 +1267,7 @@ public class FrameAdmin extends javax.swing.JFrame {
         if (taiLieuModel.getRowCount() < 0) {
             JOptionPane.showMessageDialog(null, "Không có tài liệu nào");
         }
+
     }//GEN-LAST:event_btnXemTatCaTaiLieuActionPerformed
 
     private void btnDatLaiTaiLieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDatLaiTaiLieuActionPerformed
@@ -1431,8 +1439,10 @@ public class FrameAdmin extends javax.swing.JFrame {
         if (taiLieuMuonModel.getRowCount() == 0) {
             JOptionPane.showMessageDialog(null, "Không có tài liệu mượn nào");
         }
+
     }//GEN-LAST:event_btnTimKiemTaiLieuMuonActionPerformed
 
+//<<<<<<< HEAD
 //    /**
 //     * @param args the command line arguments
 //     */
@@ -1452,6 +1462,36 @@ public class FrameAdmin extends javax.swing.JFrame {
 //            Logger.getLogger(FrameAdmin.class.getName()).log(Level.SEVERE, null, ex);
 //        }
 //    }
+//=======
+    private void btnTimKiemTaiLieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemTaiLieuActionPerformed
+        // TODO add your handling code here:
+        taiLieuModel.setRowCount(0);
+        taiLieuModel=taiLieuBLL.timKiemTaiLieu(tblTaiLieu,txtTimKiemTaiLieu.getText().trim());
+        if (taiLieuModel.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Không có tài liệu mượn nào");
+        }
+    }//GEN-LAST:event_btnTimKiemTaiLieuActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        try {
+            /* Set the Nimbus look and feel */
+
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+
+            /* Create and display the form */
+            java.awt.EventQueue.invokeLater(new Runnable() {
+                public void run() {
+                    new FrameAdmin().setVisible(true);
+                }
+            });
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(FrameAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+//>>>>>>> 4d76efbb94d8a5800ee0fdeeb10f4556fa4d7718
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PanelQLTaiLieu;
