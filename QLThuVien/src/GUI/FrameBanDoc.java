@@ -51,6 +51,7 @@ public class FrameBanDoc extends javax.swing.JFrame {
 
     public FrameBanDoc() {
         initComponents();
+        setLocationRelativeTo(this);
         taiLieuModel = (DefaultTableModel) tblTaiLieu.getModel();
         taiLieuMuonModel = (DefaultTableModel) tblTaiLieuMuon.getModel();
     }
@@ -64,7 +65,7 @@ public class FrameBanDoc extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        BanDoc = new javax.swing.JTabbedPane();
         PanelQLTaiLieuMuon = new javax.swing.JPanel();
         txtTimKiemTaiLieuMuon = new javax.swing.JTextField();
         btnTimKiemTaiLieuMuon = new javax.swing.JButton();
@@ -153,11 +154,11 @@ public class FrameBanDoc extends javax.swing.JFrame {
                         .addGap(29, 29, 29)
                         .addComponent(btnXemTatCaTaiLieuMuon)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE))
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 745, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Quản lý tài liệu mượn", PanelQLTaiLieuMuon);
+        BanDoc.addTab("Quản lý tài liệu mượn", PanelQLTaiLieuMuon);
 
         txtTimKiemTaiLieu.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
 
@@ -228,12 +229,12 @@ public class FrameBanDoc extends javax.swing.JFrame {
                             .addComponent(btnTimKiemTaiLieu))
                         .addGap(40, 40, 40)
                         .addComponent(btnXemTatCaTaiLieu)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE))
+                        .addGap(0, 625, Short.MAX_VALUE))
+                    .addComponent(jScrollPane4))
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Quản lý tài liệu", PanelQLTaiLieu);
+        BanDoc.addTab("Quản lý tài liệu", PanelQLTaiLieu);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -241,40 +242,17 @@ public class FrameBanDoc extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1))
+                .addComponent(BanDoc))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1))
+                .addComponent(BanDoc))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnXemTatCaTaiLieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXemTatCaTaiLieuActionPerformed
-        // TODO add your handling code here:
-        taiLieuModel.setRowCount(0);
-        taiLieuModel = taiLieuBLL.xemTatCaTaiLieu(tblTaiLieu);
-        if (taiLieuModel.getRowCount() < 0) {
-            JOptionPane.showMessageDialog(null, "Không có tài liệu nào");
-        }
-    }//GEN-LAST:event_btnXemTatCaTaiLieuActionPerformed
-
-    private void tblTaiLieuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTaiLieuMouseClicked
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_tblTaiLieuMouseClicked
-
-    private void btnTimKiemTaiLieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemTaiLieuActionPerformed
-        // TODO add your handling code here:
-        taiLieuModel.setRowCount(0);
-        taiLieuModel=taiLieuBLL.timKiemTaiLieu(tblTaiLieu,txtTimKiemTaiLieu.getText().trim());
-        if (taiLieuModel.getRowCount() == 0) {
-            JOptionPane.showMessageDialog(null, "Không có tài liệu mượn nào");
-        }
-    }//GEN-LAST:event_btnTimKiemTaiLieuActionPerformed
 
     private void btnXemTatCaTaiLieuMuonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXemTatCaTaiLieuMuonActionPerformed
         // TODO add your handling code here:
@@ -302,6 +280,29 @@ public class FrameBanDoc extends javax.swing.JFrame {
     
     }
     
+    private void tblTaiLieuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTaiLieuMouseClicked
+        // TODO add your handling code here:
+  
+    }//GEN-LAST:event_tblTaiLieuMouseClicked
+
+    private void btnXemTatCaTaiLieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXemTatCaTaiLieuActionPerformed
+        // TODO add your handling code here:
+        taiLieuModel.setRowCount(0);
+        taiLieuModel = taiLieuBLL.xemTatCaTaiLieu(tblTaiLieu);
+        if (taiLieuModel.getRowCount() < 0) {
+            JOptionPane.showMessageDialog(null, "Không có tài liệu nào");
+        }
+    }//GEN-LAST:event_btnXemTatCaTaiLieuActionPerformed
+
+    private void btnTimKiemTaiLieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemTaiLieuActionPerformed
+        // TODO add your handling code here:
+        taiLieuModel.setRowCount(0);
+        taiLieuModel=taiLieuBLL.timKiemTaiLieu(tblTaiLieu,txtTimKiemTaiLieu.getText().trim());
+        if (taiLieuModel.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Không có tài liệu mượn nào");
+        }
+    }//GEN-LAST:event_btnTimKiemTaiLieuActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -338,6 +339,7 @@ public class FrameBanDoc extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTabbedPane BanDoc;
     private javax.swing.JPanel PanelQLTaiLieu;
     private javax.swing.JPanel PanelQLTaiLieuMuon;
     private javax.swing.JButton btnTimKiemTaiLieu;
@@ -348,7 +350,6 @@ public class FrameBanDoc extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel32;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable tblTaiLieu;
     private javax.swing.JTable tblTaiLieuMuon;
     private javax.swing.JTextField txtTimKiemTaiLieu;

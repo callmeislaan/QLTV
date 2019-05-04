@@ -720,7 +720,11 @@
                                           <Component id="btnXoaTaiLieuMuon" min="-2" pref="163" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
-                                  <Component id="btnSuaTaiLieuMuon" alignment="0" min="-2" pref="163" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="btnSuaTaiLieuMuon" min="-2" pref="163" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="btnDatLaiMatKhauThuThu1" min="-2" pref="163" max="-2" attributes="0"/>
+                                  </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="jLabel31" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -800,7 +804,7 @@
                                   </Group>
                                   <Component id="jLabel28" alignment="1" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="1" attributes="0">
                                   <Component id="dcNgayTra" linkSize="14" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel33" min="-2" max="-2" attributes="0"/>
@@ -816,7 +820,11 @@
                                   <Component id="btnXoaTaiLieuMuon" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="btnSuaTaiLieuMuon" min="-2" pref="57" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="btnSuaTaiLieuMuon" alignment="3" min="-2" pref="57" max="-2" attributes="0"/>
+                                  <Component id="btnDatLaiMatKhauThuThu1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                           <Component id="jScrollPane5" max="32767" attributes="0"/>
                       </Group>
@@ -884,9 +892,9 @@
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="7" rowCount="0">
                         <Column editable="true" title="M&#xe3; m&#x1b0;&#x1ee3;n" type="java.lang.Object"/>
-                        <Column editable="true" title="M&#xe3; b&#x1ea1;n &#x111;&#x1ecd;c" type="java.lang.Object"/>
-                        <Column editable="true" title="M&#xe3; t&#xe0;i li&#x1ec7;u" type="java.lang.Object"/>
-                        <Column editable="true" title="M&#xe3; th&#x1ee7; th&#x1b0;" type="java.lang.Object"/>
+                        <Column editable="true" title="T&#xea;n b&#x1ea1;n &#x111;&#x1ecd;c" type="java.lang.Object"/>
+                        <Column editable="true" title="T&#xea;n t&#xe0;i li&#x1ec7;u" type="java.lang.Object"/>
+                        <Column editable="true" title="T&#xea;n th&#x1ee7; th&#x1b0;" type="java.lang.Object"/>
                         <Column editable="true" title="S&#x1ed1; l&#x1b0;&#x1ee3;ng" type="java.lang.Object"/>
                         <Column editable="true" title="Ng&#xe0;y m&#x1b0;&#x1ee3;n" type="java.lang.Object"/>
                         <Column editable="true" title="Ng&#xe0;y tr&#x1ea3;" type="java.lang.Object"/>
@@ -1026,6 +1034,17 @@
             </Component>
             <Component class="javax.swing.JTextField" name="txtMaMuon">
             </Component>
+            <Component class="javax.swing.JButton" name="btnDatLaiMatKhauThuThu1">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/Images/icons8-reset-48.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="&#x110;&#x1eb7;t l&#x1ea1;i m&#x1ead;t kh&#x1ea9;u"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDatLaiMatKhauThuThu1ActionPerformed"/>
+              </Events>
+            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="PanelQLTaiLieu">
@@ -1053,7 +1072,7 @@
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="btnTimKiemTaiLieu" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="103" alignment="0" groupAlignment="0" attributes="0">
+                          <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="jLabel25" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -1071,7 +1090,11 @@
                                       <Component id="txtGia" linkSize="11" alignment="0" min="-2" pref="152" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <Component id="btnSuaTaiLieu" linkSize="6" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="btnSuaTaiLieu" linkSize="6" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
+                                  <Component id="btnDatLaiMatKhauThuThu2" min="-2" pref="163" max="-2" attributes="0"/>
+                              </Group>
                               <Group type="102" alignment="1" attributes="0">
                                   <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
@@ -1146,7 +1169,10 @@
                                   <Component id="btnXoaTaiLieu" linkSize="7" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" max="-2" attributes="0"/>
-                              <Component id="btnSuaTaiLieu" linkSize="7" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="btnSuaTaiLieu" linkSize="7" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnDatLaiMatKhauThuThu2" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                           <Component id="jScrollPane4" pref="488" max="32767" attributes="0"/>
@@ -1330,6 +1356,17 @@
             <Component class="javax.swing.JTextField" name="txtNhaXuatBan">
             </Component>
             <Component class="javax.swing.JTextField" name="txtGia">
+            </Component>
+            <Component class="javax.swing.JButton" name="btnDatLaiMatKhauThuThu2">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/Images/icons8-reset-48.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="&#x110;&#x1eb7;t l&#x1ea1;i m&#x1ead;t kh&#x1ea9;u"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDatLaiMatKhauThuThu2ActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

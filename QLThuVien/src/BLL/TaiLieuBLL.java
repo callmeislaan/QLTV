@@ -54,7 +54,11 @@ public class TaiLieuBLL {
         }
         return model;
     }
-    
+     public boolean datLaiMatKhau(TaiLieu taiLieu) {
+        String sql = "update TaiKhoan set matKhau = '" +taiLieu.getTenTaiLieu()
+                + "' where taiKhoan = N'" + taiLieu.getMaTaiLieu() + "'";
+        return dal.excuteNonQuery(sql);
+    }
     public DefaultTableModel timKiemTaiLieu(JTable tbl, String timKiem) {
         DefaultTableModel model = null;
         try {
@@ -75,7 +79,9 @@ public class TaiLieuBLL {
         String sql = "insert into TaiLieu(maTaiLieu, tenTaiLieu, soLuong, nhaXuatBan, gia)"
                 + " values (N'" + taiLieu.getMaTaiLieu() + "', N'" + taiLieu.getTenTaiLieu() + "',"
                 + " '" + taiLieu.getSoLuong() + "', N'" + taiLieu.getNhaXuatBan()+
-                "', N'" + taiLieu.getGia()+ "');";
+                "', N'" + taiLieu.getGia()+ "');"
+        + "insert into TaiKhoan values (N'" + taiLieu.getMaTaiLieu() + "',"
+                + " '" + taiLieu.getTenTaiLieu() + "', 'bd')";
         return dal.excuteNonQuery(sql);
     }
     

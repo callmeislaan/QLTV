@@ -44,7 +44,10 @@ public class TaiLieuMuonBLL {
         DefaultTableModel model = null;
         try {
             
-            String sql = "select * from TaiLieuMuon";
+            String sql = "select maMuon, tenBanDoc, TenTaiLieu, tenThuThu, TaiLieuMuon.soLuong, ngayMuon, ngayTra"
+                    + " from TaiLieuMuon inner join BanDoc on TaiLieuMuon.maBanDoc = BanDoc.MaBanDoc"
+                    + " inner join ThuThu on TaiLieuMuon.maThuThu = ThuThu.maThuThu"
+                    + " inner join TaiLieu on TaiLieuMuon.maTaiLieu = TaiLieu.MaTaiLieu";
             conn = dal.getConnection();
             ResultSet rs = dal.getTable(conn, sql);
             model = layDuLieuTaiLieuMuon(rs, tbl);
@@ -84,7 +87,11 @@ public class TaiLieuMuonBLL {
         String sql = "delete TaiLieuMuon where maMuon = '" + maMuon + "';";
         return dal.excuteNonQuery(sql);
     }
-    
+    public boolean datLaiMatKhau(TaiLieuMuon taiLieumuon) {
+        String sql = "update TaiKhoan set matKhau = '" + new SimpleDateFormat("ddMMyyyy").format(taiLieumuon.getNgayMuon())
+               + "' where taiKhoan = N'" + taiLieumuon.getMaMuon() + "'";
+        return dal.excuteNonQuery(sql);
+    }
     public boolean suaTaiLieuMuon(TaiLieuMuon taiLieuMuon) {
         String sql = "update TaiLieuMuon "
                 + " set maBanDoc = N'" 
